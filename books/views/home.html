@@ -1,0 +1,29 @@
+<style>
+	.book{border-radius:3px; margin-bottom:10px; cursor:pointer;}	
+</style>
+
+
+
+<br/>
+
+<div class="form-group col-xs-12">
+	<input type="text" class="form-control" name="search" placeholder='Buscar un libro' required />
+</div>
+
+
+<div class="row">
+            <div align="center">
+                <button class="btn btn-default filter-button" data-filter="1">Filtro 1</button>
+                <button class="btn btn-default filter-button" data-filter="2">Filtro 2</button>
+                <button class="btn btn-default filter-button" data-filter="3">Filtro 3</button>
+                <button class="btn btn-default filter-button" data-filter="4">filtro 4</button>
+                <button class="btn btn-default filter-button" data-filter="5">Filtro 5</button>
+           </div>
+           <br/>
+
+
+            <div ng-repeat="book in books" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+		    <img src={{book.image}} class="img-responsive book"  ng-click='bookRequest(book)'>
+            </div>
+
+</div>
