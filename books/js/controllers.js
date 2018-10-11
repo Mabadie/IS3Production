@@ -49,7 +49,7 @@ angular.module('SHAREBOOKSApp')
 
             var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
 			$rootScope.usuario.logged_in=true;
-			$location.url("/home");
+			$location.url("/books");
 
 
             /*dataFactory.login(cliente)
@@ -78,7 +78,7 @@ angular.module('SHAREBOOKSApp')
 		
 
 angular.module('SHAREBOOKSApp')
-    .controller('HomeCtrl', ['$scope','$rootScope','$routeParams', '$location','$window','dataFactory','modalService',
+    .controller('BooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$window','dataFactory','modalService',
         function ($scope, $rootScope, $routeParams,  $location, $window, dataFactory,modalService) {
            $rootScope.status={"hayerror":false,"success":false,"msg":null};
 			
@@ -147,12 +147,80 @@ angular.module('SHAREBOOKSApp')
                    
                 });
 			}
-			
-			
-			
-			
-			
-			
-
 
     }]);
+
+
+
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('MyBooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory)
+	{
+			$rootScope.status={"hayerror":false,"success":false,"msg":null};
+			$scope.book=null;
+			
+			            $scope.books=
+			            [
+			                {
+			                    "title":"Cartero",
+    		                    "author":"Charles Bukowski",
+					            "year":"1971",
+					            "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+					        },
+					        {
+					            "title":"La maquina de follar",
+					            "author":"Charles Bukowski",
+					            "year":"1978",
+					            "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+					        },
+					        {
+					            "title":"Cartero",
+					            "author":"Charles Bukowski",
+					            "year":"1971",
+					            "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+					         },
+					         {
+																																																														                    "title":"La maquina de follar",
+				               "author":"Charles Bukowski",
+				               "year":"1978",
+				               "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+						     },
+						     {
+						       "title":"Cartero",
+						       "author":"Charles Bukowski",
+						       "year":"1971",
+						       "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+						     },
+						     {
+						       "title":"La maquina de follar",
+						       "author":"Charles Bukowski",
+						       "year":"1978",
+						       "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+						     }
+
+                           ];
+
+
+				$scope.edit=function(book)
+				{
+					$scope.book=book;
+					$('#editBookModal').modal('toggle');
+				}
+
+				$scope.editBook=function()
+				{
+					alert('submit changes')				
+				}
+
+				$scope.imageChange=function()
+				{
+					alert('image changes')
+				}
+																																																																																																																									}
+]);
+
+
+
+

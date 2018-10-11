@@ -3,7 +3,8 @@
 var app = angular.module('SHAREBOOKSApp', ['ngRoute','ui.bootstrap']);
 
 app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/home', {controller: 'HomeCtrl',templateUrl: './views/home.html'});
+    $routeProvider.when('/books', {controller: 'BooksCtrl',templateUrl: './views/books.html'});
+	$routeProvider.when('/my-books', {controller: 'MyBooksCtrl',templateUrl: './views/mybooks.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
 
     $routeProvider.otherwise({ redirectTo: '/home' });

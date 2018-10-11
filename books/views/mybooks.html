@@ -1,0 +1,23 @@
+<style>
+	.book{border-radius:3px; margin-bottom:10px; cursor:pointer;}
+	.detail{height:50px; width:100%; background:#000; position:absolute; bottom:0px;}
+</style>
+
+
+
+<br/>
+
+<div class="row">
+            <div ng-repeat="book in books" class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6">
+			<div class="thumbnail">	
+		    	<img src={{book.image}} class="img-responsive book"  ng-click='edit(book)'>
+				<div class='caption'>
+					<h4>{{book.title}} ({{book.year}})</h4>
+					<h5>{{book.author}}</h5>
+				</div>
+            </div>
+			</div>
+
+</div>
+
+<div ng-include="'partials/edit-book.html'"></div>
