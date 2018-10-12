@@ -1,9 +1,12 @@
 <style>
 	.book{border-radius:3px; margin-bottom:10px; cursor:pointer;}
-	.detail{height:50px; width:100%; background:#000; position:absolute; bottom:0px;}
 </style>
 
+<br/>
 
+<div align="center">
+      <button class="btn btn-outline-dark" type='button' ng-click='new();'>Agregar Libro</button>
+</div>
 
 <br/>
 
@@ -14,10 +17,15 @@
 				<div class='caption'>
 					<h4>{{book.title}} ({{book.year}})</h4>
 					<h5>{{book.author}}</h5>
+					<button class="btn btn-md btn-outline-dark" type='button'  ng-click='delete(book);'>
+                                            <span class="glyphicon glyphicon-remove"></span>&nbsp;Borrar
+                                        </button>					
 				</div>
+            		</div>
             </div>
-			</div>
 
 </div>
 
+<div ng-include="'partials/new-book.html'"></div>
 <div ng-include="'partials/edit-book.html'"></div>
+

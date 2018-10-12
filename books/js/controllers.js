@@ -3,12 +3,16 @@ angular.module('SHAREBOOKSApp')
     .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window',
         function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window) {
 			
-            $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
+	    $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
             $rootScope.status={"hayerror":false,"success":false,"msg":null};
 			$rootScope.esLogout=false;
             $scope.status.hayerrorLogin=false;
             $rootScope.ajaxCount=0;
             $('nav').addClass('shrink');
+	    $(".nav a").on("click", function(){
+            	$(".nav").find(".active").removeClass("active");
+   		$(this).parent().addClass("active");
+	    });		
 
 			$location.path("/login");
 
@@ -155,11 +159,11 @@ angular.module('SHAREBOOKSApp')
 
 
 angular.module('SHAREBOOKSApp')
-    .controller('MyBooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory',
-    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory)
+    .controller('MyBooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
 	{
 			$rootScope.status={"hayerror":false,"success":false,"msg":null};
-			$scope.book=null;
+			$scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
 			
 			            $scope.books=
 			            [
@@ -203,10 +207,30 @@ angular.module('SHAREBOOKSApp')
                            ];
 
 
+				$scope.delete=function(book)
+				{
+					 var modalOptions = {
+                				mType:'confirm',
+				                closeButtonText: 'Cancelar',
+				                actionButtonText: 'Borrar',	
+				                headerText: 'Borrar libro',
+				                bodyText: 'Desea borrar "'+book.title+'"?'
+              				};
+
+                	         	modalService.showModal({}, modalOptions).then(function (result){
+		
+		        	        });				
+				}				
+
 				$scope.edit=function(book)
 				{
 					$scope.book=book;
 					$('#editBookModal').modal('toggle');
+				}
+
+				$scope.new=function()
+				{
+                                        $('#newBookModal').modal('toggle');
 				}
 
 				$scope.editBook=function()
@@ -218,8 +242,8 @@ angular.module('SHAREBOOKSApp')
 				{
 					alert('image changes')
 				}
-																																																																																																																									}
-]);
+
+}]);
 
 
 
