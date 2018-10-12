@@ -85,7 +85,8 @@ angular.module('SHAREBOOKSApp')
     .controller('BooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$window','dataFactory','modalService',
         function ($scope, $rootScope, $routeParams,  $location, $window, dataFactory,modalService) {
            $rootScope.status={"hayerror":false,"success":false,"msg":null};
-
+	   $scope.search_txt="";		   
+	
 	   dataFactory.books().success(function(data)
 	   {
 		$scope.books=data;	
@@ -108,13 +109,13 @@ angular.module('SHAREBOOKSApp')
 	   }
 
 	  
-       $scope.search=function(key)
-	   {
-			dataFactory.books(key).success(function(data)
+       $scope.search=function()
+       {
+		dataFactory.books($scope.search_txt).success(function(data)
 	        {
                 	$scope.books=data;
            	});
-	   }
+       }
 
     }]);
 

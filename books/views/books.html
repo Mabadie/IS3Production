@@ -40,9 +40,9 @@
 <div class="form-group col-xs-12">
 <div id="custom-search-input">
            <div class="input-group col-md-12">
-                   <input type="text" class="form-control input-md" placeholder="Buscar Libro" id='search'/>
+                   <input type="text" class="form-control input-md" placeholder="Buscar Libro" id='search' ng-model='search_txt'/>
                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-md" type="button" ng-click="search($('#search').val())">
+                        <button class="btn btn-info btn-md" type="button" ng-click="search()">
 	                            <i class="glyphicon glyphicon-search"></i>
                          </button>
                     </span>
