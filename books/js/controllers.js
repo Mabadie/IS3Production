@@ -108,9 +108,9 @@ angular.module('SHAREBOOKSApp')
 	   }
 
 	  
-           $scope.search=function(key)
+       $scope.search=function(key)
 	   {
-		dataFactory.books(key).success(function(data)
+			dataFactory.books(key).success(function(data)
 	        {
                 	$scope.books=data;
            	});
