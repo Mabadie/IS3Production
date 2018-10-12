@@ -4,18 +4,26 @@ angular.module('SHAREBOOKSApp')
 
        $http.defaults.headers.common['Content-Type'] = 'application/json';
 
-        var urlBase = APP_CONFIG.ct_urlService +  APP_CONFIG.ct_urlBase;
+        var urlBase = APP_CONFIG.ct_urlService + APP_CONFIG.ct_urlBase;
         var dataFactory = {};
 
-		//*** Auth provider service
-		dataFactory.authprovider = function (ctrl) {
-				return $http.get(urlBase + '/Auth-Provider/resource/'+ ctrl);
+	//*** Auth provider service
+	dataFactory.authprovider = function (ctrl) {
+		return $http.get(urlBase + '/Auth-Provider/resource/'+ ctrl);
         };
 
         //*** Login del Usuario
         dataFactory.login = function (user) {
             return $http.post(urlBase + '/login',user);
         };
+
+	 //*** Listado de libros
+        dataFactory.books = function (key) {
+	    var search=(key)? "?search="+key:"";	
+            return $http.get(urlBase + '/books/'+search);
+        };
+
+
 
         dataFactory.formatDate = function (dateString) {
 

@@ -85,72 +85,36 @@ angular.module('SHAREBOOKSApp')
     .controller('BooksCtrl', ['$scope','$rootScope','$routeParams', '$location','$window','dataFactory','modalService',
         function ($scope, $rootScope, $routeParams,  $location, $window, dataFactory,modalService) {
            $rootScope.status={"hayerror":false,"success":false,"msg":null};
-			
-			$scope.books=
-			[
-				{
-					"title":"Cartero",
-					"author":"Charles Bukowski",
-					"year":"1971",
-					"image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
-				},
 
-				{
-                    "title":"La maquina de follar",
-                    "author":"Charles Bukowski",
-                    "year":"1978",
-                    "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
-                },
-				
-				{
-					"title":"Cartero",
-					"author":"Charles Bukowski",
-					"year":"1971",
-					"image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
-				},
+	   dataFactory.books().success(function(data)
+	   {
+		$scope.books=data;	
+           });
+			
+			
+           $scope.bookRequest=function(book)
+	   {
+			
+			var modalOptions = {
+                		mType:'confirm',
+                		closeButtonText: 'Cancelar',
+                		actionButtonText: 'Solicitar',
+                		headerText: 'Solicitar libro',
+                		bodyText: 'Desea enviar una solicitud para "'+book.title+'"?'
+               		};
+			
+			 modalService.showModal({}, modalOptions).then(function (result) {
+			 });
+	   }
 
-				{
-                    "title":"La maquina de follar",
-                    "author":"Charles Bukowski",
-                    "year":"1978",
-                    "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
-                },
-				
-				{
-					"title":"Cartero",
-					"author":"Charles Bukowski",
-					"year":"1971",
-					"image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
-				},
-
-				{
-                    "title":"La maquina de follar",
-                    "author":"Charles Bukowski",
-                    "year":"1978",
-                    "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
-                }
-
-			];
-			
-			
-			$scope.bookRequest=function(book)
-			{
-			
-			  var modalOptions = {
-                mType:'confirm',
-                closeButtonText: 'Cancelar',
-                actionButtonText: 'Solicitar',
-                headerText: 'Solicitar libro',
-                bodyText: 'Desea enviar una solicitud para "'+book.title+'"?'
-              };
-			
-			 modalService.showModal({}, modalOptions)
-                .then(function (result) {
-					
-					
-                   
-                });
-			}
+	  
+           $scope.search=function(key)
+	   {
+		dataFactory.books(key).success(function(data)
+	        {
+                	$scope.books=data;
+           	});
+	   }
 
     }]);
 
