@@ -15,16 +15,20 @@ from rest_framework import status
 from rest_framework import permissions
 from django.db.models import Q
 
+
 #@csrf_exempt
 
 class BookList(APIView):
 
-	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)	
-
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+	
 	def get(self, request, format=None):
-        	books = Book.objects.filter(~Q(owner = self.request.user.id))
-	        serializer = BookSerializer(books, many=True)
-        	return Response(serializer.data)
+		books = Book.objects.filter(~Q(owner = self.request.user.id))
+		
+		if request.GET.get('search'):
+			books = books.filter(title__icontains=self.request.GET['search'])
+		serializer = BookSerializer(books, many=True)
+		return Response(serializer.data)
 	
  
 
