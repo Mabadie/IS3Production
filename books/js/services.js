@@ -23,6 +23,11 @@ angular.module('SHAREBOOKSApp')
             return $http.get(urlBase + '/books/'+search);
         };
 
+	//solicitud de libro
+	dataFactory.bookrequest = function (req) {
+            return $http.post(urlBase + '/book-request/',req);
+        };
+
 
 
         dataFactory.formatDate = function (dateString) {

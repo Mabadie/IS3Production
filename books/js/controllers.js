@@ -60,7 +60,7 @@ angular.module('SHAREBOOKSApp')
 		
 			if (status == 200) 
 			{
-                        	$http.defaults.headers.common['Autorization'] = "Token "+data.token;
+                        	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
                  		$location.url("/books");
                     	}
@@ -98,6 +98,17 @@ angular.module('SHAREBOOKSApp')
                		};
 			
 			 modalService.showModal({}, modalOptions).then(function (result) {
+						
+				var req={'book':book.id};
+				dataFactory.bookrequest(req).success(function(data)
+				{
+					
+					//simular notificaciones
+					
+
+
+				});	
+
 			 });
 	   }
 
