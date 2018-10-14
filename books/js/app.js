@@ -3,8 +3,11 @@
 var app = angular.module('SHAREBOOKSApp', ['ngRoute','ui.bootstrap']);
 
 app.config(['$routeProvider', function ($routeProvider) {
-    $routeProvider.when('/home', {controller: 'HomeCtrl',templateUrl: './views/home.html'});
+    $routeProvider.when('/books', {controller: 'BooksCtrl',templateUrl: './views/books.html'});
+	$routeProvider.when('/my-books', {controller: 'MyBooksCtrl',templateUrl: './views/mybooks.html'});
+	$routeProvider.when('/shared', {controller: 'SharedCtrl',templateUrl: './views/shared.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
+	$routeProvider.when('/register', {controller: 'LoginCtrl',templateUrl: './views/register.html'});
 
     $routeProvider.otherwise({ redirectTo: '/home' });
 }]);
@@ -44,9 +47,9 @@ var interceptor=function($q, $rootScope, $log) {
                         }
                         
                  	
-						if(rejection.data.CodResp==300)break;
+			if(rejection.data.CodResp==300)break;
 
-						$log.warn(rejection.status+':'+rejection.statusText + ' : Código Respuesta:' + rejection.data.CodResp + ' - ' + rejection.data.TextoResp);
+			$log.warn(rejection.status+':'+rejection.statusText + ' : Código Respuesta:' + rejection.data.CodResp + ' - ' + rejection.data.TextoResp);
                         $rootScope.status.msg = "Error: "+ rejection.data.TextoResp;
                         $rootScope.status.hayerror = true;
                     }else{
@@ -56,8 +59,9 @@ var interceptor=function($q, $rootScope, $log) {
                     }
                     break;
                 default :
+		    console.log(rejection);	
                     $log.warn(rejection.status+':'+rejection.statusText);
-                    $rootScope.status.msg = rejection.statusText;
+                    $rootScope.status.msg = rejection.data;
                     $rootScope.status.hayerror =true;
                     break;
             }
@@ -88,8 +92,8 @@ app.run(['$rootScope', '$location',  function ($rootScope, $location ) {
                     return;
                 }
             }else{
-                if (next.$$route.originalPath != "/login") {
-						$location.path('/login');
+                if (next.$$route.originalPath != "/login" && next.$$route.originalPath != "/register") {
+			$location.path('/login');
                 }
             }
         });

@@ -26,11 +26,15 @@ def api_500_handler(exception, context):
 def login(request):
     username = request.data.get("username")
     password = request.data.get("password")
+
     if username is None or password is None:
         return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
+
     user = authenticate(username=username, password=password)
+
     if not user: 
-        return Response("",status=status.HTTP_400_BAB_REQUEST)
+        return Response("Datos no validos",status=status.HTTP_400_BAD_REQUEST)
+
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},status=status.HTTP_200_OK)
 

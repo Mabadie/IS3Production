@@ -15,7 +15,7 @@ class Book(models.Model):
 	title = models.CharField(max_length=100, blank=True, default='')
 	author = models.TextField()
 	year = models.IntegerField(default=False)
-	image= models.CharField(max_length=100, blank=True, default='B64encoded')
+	image= models.CharField(max_length=100, blank=True)
 	aviable = models.BooleanField(default=True);
 
 	def owned_by(self,user):

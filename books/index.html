@@ -6,6 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="">
 
+                            
+<style>
+.navbar.center .navbar-inner {
+    text-align: center;
+	}
+
+	.navbar.center .navbar-inner .nav {
+	    display:inline-block;
+		    float: none;
+			}
+
 </style>
 
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -17,10 +28,21 @@
 </div>
 
 
-<div   class="navbar navbar-default navbar-static-top" role="navigation" style="height: 60px ; margin-bottom: 0px;">
-		
-
- </div>
+<nav class="navbar navbar-default center" role="navigation" ng-show="usuario.logged_in">
+    <div class="navbar-header">
+	        
+		<a class="navbar-brand" href="#"><img src="//placehold.it/100x30" class="img-responsive" alt="logo"></a>
+		   
+		    <ul class="nav navbar-nav">
+		        <li class="active"><a href="#books">Libros</a></li>
+				<li><a href="#my-books">Mis libros</a></li>
+				<li><a href="#shared">Mis Prestamos</a></li>
+				<li><a href="#notification">Notificaciones &nbsp;<span class="badge badge-danger pull-right ">4</span></a></li>
+				<li><a href="#account">Cuenta</a></li>
+				<li><a href="#logout">Salir</a></li>
+	        </ul>
+    </div>
+</nav>
 
     <div id="loading-indicator" style="display:none">
         <div ng-show="blockTrans" style="position: fixed; width:100%; height: 100%; left: 0; top: 0;z-index: 2000; border-radius: 12px; background-color: rgba(250, 250, 250, 0.7) !important;"></div>
