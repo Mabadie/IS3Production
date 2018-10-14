@@ -47,9 +47,9 @@ var interceptor=function($q, $rootScope, $log) {
                         }
                         
                  	
-						if(rejection.data.CodResp==300)break;
+			if(rejection.data.CodResp==300)break;
 
-						$log.warn(rejection.status+':'+rejection.statusText + ' : Código Respuesta:' + rejection.data.CodResp + ' - ' + rejection.data.TextoResp);
+			$log.warn(rejection.status+':'+rejection.statusText + ' : Código Respuesta:' + rejection.data.CodResp + ' - ' + rejection.data.TextoResp);
                         $rootScope.status.msg = "Error: "+ rejection.data.TextoResp;
                         $rootScope.status.hayerror = true;
                     }else{
@@ -59,8 +59,9 @@ var interceptor=function($q, $rootScope, $log) {
                     }
                     break;
                 default :
+		    console.log(rejection);	
                     $log.warn(rejection.status+':'+rejection.statusText);
-                    $rootScope.status.msg = rejection.statusText;
+                    $rootScope.status.msg = rejection.data;
                     $rootScope.status.hayerror =true;
                     break;
             }

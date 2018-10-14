@@ -45,38 +45,31 @@ angular.module('SHAREBOOKSApp')
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
 
+	    $scope.login=function() 
+	    {
+            	$('.buttonLogin').attr("disabled", true);
+       		var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
+		//$rootScope.usuario.logged_in=true;
+		//$location.url("/books");
 
-        $scope.login=function() {
-            $scope.status={"hayerror":false,"success":false,"msg":null};
-            
-			$('.buttonLogin').attr("disabled", true);
-
-            var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
-			$rootScope.usuario.logged_in=true;
-			$location.url("/books");
-
-
-            /*dataFactory.login(cliente)
-                .error(function (error, status) {
-
-                        $scope.status.msgLogin = "El número de cliente o el ePIN es incorrecto. Reingrese";
-                        $scope.status.hayerrorLogin = true;
-                        $('.buttonLogin').removeAttr("disabled");
-
-                })
-                .success(function (data, status) {
-					if (status == 201) 
-					{
-                        $http.defaults.headers.common['Autorization'] = "Token "+data.token;
-                    })
+            	dataFactory.login(cliente).error(function (error, status){
+                        $scope.status.msgLogin = "Datos no validos";
+       	               	$scope.status.hayerrorLogin = true;
+               	        $('.buttonLogin').removeAttr("disabled");
+               	}).success(function (data, status) {
+		
+			if (status == 200) 
+			{
+                        	$http.defaults.headers.common['Autorization'] = "Token "+data.token;
+		                $rootScope.usuario.logged_in=true;
+                 		$location.url("/books");
+                    	}
                  });
                         
-                            $rootScope.usuario.logged_in=true;
-                            $location.url("/home");
 
-                    }
-                });*/
-        };
+             }
+        
+     
 }]);
 		
 		
@@ -136,37 +129,37 @@ angular.module('SHAREBOOKSApp')
 			                    "title":"Cartero",
     		                    "author":"Charles Bukowski",
 					            "year":"1971",
-					            "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+					            "image":"http://media.bookshare.com/cartero.jpg"
 					        },
 					        {
 					            "title":"La maquina de follar",
 					            "author":"Charles Bukowski",
 					            "year":"1978",
-					            "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+					            "image":"http://media.bookshare.com/follar.jpg"
 					        },
 					        {
 					            "title":"Cartero",
 					            "author":"Charles Bukowski",
 					            "year":"1971",
-					            "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+					            "image":"http://media.bookshare.com/cartero.jpg"
 					         },
 					         {
 																																																														                    "title":"La maquina de follar",
-				               "author":"Charles Bukowski",
+				               	"author":"Charles Bukowski",
 				               "year":"1978",
-				               "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+				               "image":"http://media.bookshare.com/follar.jpg"
 						     },
 						     {
 						       "title":"Cartero",
 						       "author":"Charles Bukowski",
 						       "year":"1971",
-						       "image":"http://webtestpas.objetos.com.uy/books/img/cartero.jpg"
+						       "image":"http://media.bookshare.com//cartero.jpg"
 						     },
 						     {
 						       "title":"La maquina de follar",
 						       "author":"Charles Bukowski",
 						       "year":"1978",
-						       "image":"http://webtestpas.objetos.com.uy/books/img/follar.jpg"
+						       "image":"http://media.bookshare.com//follar.jpg"
 						     }
 
                            ];

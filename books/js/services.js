@@ -14,7 +14,7 @@ angular.module('SHAREBOOKSApp')
 
         //*** Login del Usuario
         dataFactory.login = function (user) {
-            return $http.post(urlBase + '/login',user);
+            return $http.post(urlBase + '/login/',user);
         };
 
 	 //*** Listado de libros
