@@ -5,7 +5,9 @@ var app = angular.module('SHAREBOOKSApp', ['ngRoute','ui.bootstrap']);
 app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider.when('/books', {controller: 'BooksCtrl',templateUrl: './views/books.html'});
 	$routeProvider.when('/my-books', {controller: 'MyBooksCtrl',templateUrl: './views/mybooks.html'});
+	$routeProvider.when('/shared', {controller: 'SharedCtrl',templateUrl: './views/shared.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
+	$routeProvider.when('/register', {controller: 'LoginCtrl',templateUrl: './views/register.html'});
 
     $routeProvider.otherwise({ redirectTo: '/home' });
 }]);
@@ -89,8 +91,8 @@ app.run(['$rootScope', '$location',  function ($rootScope, $location ) {
                     return;
                 }
             }else{
-                if (next.$$route.originalPath != "/login") {
-						$location.path('/login');
+                if (next.$$route.originalPath != "/login" && next.$$route.originalPath != "/register") {
+			$location.path('/login');
                 }
             }
         });

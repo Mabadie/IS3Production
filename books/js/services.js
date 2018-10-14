@@ -33,5 +33,6 @@ angular.module('SHAREBOOKSApp')
             return day + '/' + month +'/'+ year;
 
         };
+
         return dataFactory;
     }]);
