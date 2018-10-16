@@ -8,8 +8,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/shared', {controller: 'SharedCtrl',templateUrl: './views/shared.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
 	$routeProvider.when('/register', {controller: 'LoginCtrl',templateUrl: './views/register.html'});
+	$routeProvider.when('/notifications', {controller: 'NotifiationsCtrl',templateUrl: './views/notifications.html'});
 
-    $routeProvider.otherwise({ redirectTo: '/home' });
+    	$routeProvider.otherwise({ redirectTo: '/books' });
 }]);
 
 var interceptor=function($q, $rootScope, $log) {
@@ -81,22 +82,16 @@ app.config(function($provide, $httpProvider) {
 app.run(['$rootScope', '$location',  function ($rootScope, $location ) {
        
 		$rootScope.$on("$routeChangeError",function(event, previous, current, rejection){
-			 $location.path('/home');
+			 $location.path('/books');
 		});
 
 		$rootScope.$on("$routeChangeStart", function (event, next, current) {
 			
-            if ($rootScope.usuario.logged_in) {
-                if (next.$$route.originalPath == "/login") {
-                    $location.path('/home');
-                    return;
-                }
-            }else{
-                if (next.$$route.originalPath != "/login" && next.$$route.originalPath != "/register") {
-			$location.path('/login');
-                }
-            }
-        });
+            	if (!$rootScope.usuario.logged_in) 
+               		if (next.$$route.originalPath != "/login" && next.$$route.originalPath != "/register") 
+				$location.path('/login');
+            		
+        	});
 
 }]);
 

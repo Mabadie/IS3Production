@@ -121,7 +121,7 @@ angular.module('SHAREBOOKSApp')
            	});
        }
 
-    }]);
+}]);
 
 
 
@@ -217,3 +217,60 @@ angular.module('SHAREBOOKSApp')
 
 
 
+
+angular.module('SHAREBOOKSApp')
+    .controller('NotificationsCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+                        $rootScope.status={"hayerror":false,"success":false,"msg":null};
+                        $scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
+
+                                    $scope.books=
+                                    [
+                                        {
+                                            "title":"Cartero",
+                                    "author":"Charles Bukowski",
+                                                    "year":"1971",
+                                                    "image":"http://media.bookshare.com/cartero.jpg"
+                                                },
+                                                {
+                                                    "title":"La maquina de follar",
+                                                    "author":"Charles Bukowski",
+                                                    "year":"1978",
+                                                    "image":"http://media.bookshare.com/follar.jpg"
+                                                },
+                                                {
+                                                    "title":"Cartero",
+                                                    "author":"Charles Bukowski",
+                                                    "year":"1971",
+                                                    "image":"http://media.bookshare.com/cartero.jpg"
+                                                 },
+                                                 {
+                                                                                                                                                                                                                                       
+                                                "author":"Charles Bukowski",
+                                               "year":"1978",
+                                               "image":"http://media.bookshare.com/follar.jpg"
+                                                     },
+                                                     {
+                                                       "title":"Cartero",
+                                                       "author":"Charles Bukowski",
+                                                       "year":"1971",
+                                                       "image":"http://media.bookshare.com//cartero.jpg"
+                                                     },
+                                                     {
+                                                       "title":"La maquina de follar",
+                                                       "author":"Charles Bukowski",
+                                                       "year":"1978",
+                                                       "image":"http://media.bookshare.com//follar.jpg"
+                                                     }
+
+                           ];
+
+
+                /*$scope.notifs=
+                [
+                        //{type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
+                        //{type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'}
+                ];*/
+
+}]);
