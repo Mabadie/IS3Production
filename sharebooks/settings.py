@@ -156,5 +156,5 @@ USE_TZ = True
 
 STATIC_URL = '/media/'
 STATIC_ROOT = BASE_DIR+'/static/'
-ALLOWED_HOSTS = ['bookshare.com', 'localhost']
+ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
 MEDIA_URL = 'http://media.bookshare.com/'
