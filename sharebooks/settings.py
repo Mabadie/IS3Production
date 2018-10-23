@@ -156,6 +156,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/media/'
-STATIC_ROOT = BASE_DIR+'/static/'
+STATIC_ROOT = BASE_DIR+'/media/'
 ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
 MEDIA_URL = 'http://media.bookshare.com/'
