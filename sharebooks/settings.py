@@ -52,7 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'sharebooks.urls'
 
@@ -156,5 +159,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/media/'
 STATIC_ROOT =  os.path.join(BASE_DIR, 'media')
+
 ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
 MEDIA_URL = 'http://media.bookshare.com/'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
