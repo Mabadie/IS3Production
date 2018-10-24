@@ -9,6 +9,9 @@ from rest_framework.authtoken.models import Token
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework import status
+from django.template import loader
+from django.http import HttpResponse
+
 
 """
 def api_500_handler(exception, context):
@@ -39,3 +42,7 @@ def login(request):
     return Response({'token': token.key},status=status.HTTP_200_OK)
 
 
+@csrf_exempt
+def home(request):
+	template = loader.get_template('index.html')
+	return HttpResponse(template.render({}, request))

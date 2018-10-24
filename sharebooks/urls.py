@@ -16,12 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from sharebooks.views import login
+from sharebooks.views import login, home
 
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
-	path('login/',login),
+	path('login/', login),
+	path('home/', home),
 	url(r'^api-auth/', include('rest_framework.urls')),
 	url(r'^', include('books.urls')),
 	url(r'^', include('bookrequest.urls')),

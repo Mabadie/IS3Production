@@ -20,4 +20,4 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'sharebooks.settings')
 
 application = get_wsgi_application()
 application = WhiteNoise(application, root=BASE_DIR+'/media')
-application.add_files(BASE_DIR+'/home', prefix='#/')
+application.add_files(BASE_DIR+'/home', prefix='/home')

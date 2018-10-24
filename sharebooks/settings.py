@@ -62,7 +62,7 @@ ROOT_URLCONF = 'sharebooks.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+		'DIRS': [BASE_DIR + '/templates/'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -159,6 +159,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/media/'
 STATIC_ROOT =  os.path.join(BASE_DIR, 'media')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "templates"),
+]
 
 ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
 MEDIA_URL = 'http://media.bookshare.com/'
