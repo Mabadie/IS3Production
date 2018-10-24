@@ -154,8 +154,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
-
 STATIC_URL = '/media/'
-STATIC_ROOT = BASE_DIR+'/media/'
+STATIC_ROOT =  os.path.join(BASE_DIR, 'media')
 ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
 MEDIA_URL = 'http://media.bookshare.com/'
