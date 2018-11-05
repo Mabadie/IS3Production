@@ -37,10 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'rest_framework.authtoken',	
+    'rest_framework.authtoken',
     'books.apps.BookConfig',
-    'bookrequest.apps.BookrequestConfig',	
-    #'push_notifications',
+    'bookrequest.apps.BookrequestConfig',
+    # 'django.db.backends.mysql'
+    # 'push_notifications',
 ]
 
 MIDDLEWARE = [
@@ -76,18 +77,28 @@ WSGI_APPLICATION = 'sharebooks.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'bookshare',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
+        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
+        'PORT': '5432',
+    }
+}
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-	'OPTIONS': {
-		 'read_default_file': '/etc/sharebooks.cnf',
-		 'sql_mode': 'traditional',
-	}
+        'NAME': 'SHAREBOOKS',
+        'USER': 'jcarbajales',
+        'PASSWORD': 'sharebooks',
+        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+        'PORT': '3306',
     }
 }
-
-
+"""
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
@@ -119,11 +130,11 @@ REST_FRAMEWORK = {
 	
 	'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
-    	),
-    
-	'DEFAULT_PARSER_CLASSES': (
+    ),
+
+    'DEFAULT_PARSER_CLASSES': (
         'rest_framework.parsers.JSONParser',
-    	)
+    )
 }
 
 
