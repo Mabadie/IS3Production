@@ -162,5 +162,6 @@ USE_TZ = True
 STATIC_URL = '/app/'
 STATIC_ROOT = BASE_DIR+'/app/'
 ALLOWED_HOSTS = ['bookshare1995.herokuapp.com', 'bookshare.com', 'localhost']
+MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
