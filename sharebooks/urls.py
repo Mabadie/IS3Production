@@ -18,6 +18,9 @@ from django.urls import path
 from django.conf.urls import url, include
 from sharebooks.views import login, home
 
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic import RedirectView
 
 urlpatterns = [
 	path('admin/', admin.site.urls),
@@ -26,4 +29,5 @@ urlpatterns = [
 	url(r'^api-auth/', include('rest_framework.urls')),
 	url(r'^', include('books.urls')),
 	url(r'^', include('bookrequest.urls')),
-]
+	url(r'^$', RedirectView.as_view(url='app/index.html')),
+]+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
