@@ -116,6 +116,7 @@ REST_FRAMEWORK = {
 
 	#'PAGE_SIZE': 20,
 	
+	
 	'DEFAULT_RENDERER_CLASSES': (
         'rest_framework.renderers.JSONRenderer',
     	),
@@ -143,7 +144,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATIC_URL = '/media/'
-ALLOWED_HOSTS = ['bookshare.com','localhost']
-MEDIA_URL = 'http://media.bookshare.com/'
+STATICFILES_DIRS= [BASE_DIR+'/app/',]
+#STATIC_ROOT = BASE_DIR+'/app/'
+MEDIA_URL = '/media/'
+STATIC_URL = '/app/'
+ALLOWED_HOSTS=['services.bookshare.com',]
+
 
