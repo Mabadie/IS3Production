@@ -6,7 +6,7 @@ class BookSerializer(serializers.ModelSerializer):
 
 	image = serializers.SerializerMethodField()
 	def get_image(self, obj):
-		return settings.BASE_DIR+settings.MEDIA_URL+obj.image
+		return settings.MEDIA_URL+obj.image
 
 	class Meta:
 		model = Book
