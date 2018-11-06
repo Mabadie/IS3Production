@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from sharebooks.views import login
+from sharebooks.views import login, home
 
 from django.conf import settings
 from django.conf.urls.static import static
