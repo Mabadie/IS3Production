@@ -77,6 +77,7 @@ WSGI_APPLICATION = 'sharebooks.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -91,14 +92,14 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SHAREBOOKS',
-        'USER': 'jcarbajales',
-        'PASSWORD': 'sharebooks',
-        'HOST': '127.0.0.1',   # Or an IP Address that your DB is hosted on
+        'NAME': 'SHAREBOOKS_PROD',
+        'USER': 'admin',
+        'PASSWORD': 'is32018',
+        'HOST': '190.64.68.74',   # Or an IP Address that your DB is hosted on
         'PORT': '3306',
     }
 }
-"""
+
 # Password validation
 # https://docs.djangoproject.com/en/2.1/ref/settings/#auth-password-validators
 
