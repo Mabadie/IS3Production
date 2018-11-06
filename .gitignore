@@ -1,1 +1,3 @@
 *.pyc
+app/config/web.config.js
+sharebooks/settings.py

@@ -3,9 +3,9 @@ angular.module('SHAREBOOKSApp')
     .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window',
         function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window) {
 			
-	    $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
+	    $rootScope.usuario={"logged_in":false};
             $rootScope.status={"hayerror":false,"success":false,"msg":null};
-			$rootScope.esLogout=false;
+	    $rootScope.esLogout=false;
             $scope.status.hayerrorLogin=false;
             $rootScope.ajaxCount=0;
             $('nav').addClass('shrink');
@@ -14,24 +14,19 @@ angular.module('SHAREBOOKSApp')
    		$(this).parent().addClass("active");
 	    });		
 
-			$location.path("/login");
+	    $location.path("/login");
 
-           	$rootScope.cerrarModal=function(modDiag){
+            $rootScope.cerrarModal=function(modDiag){
                 $(modDiag).modal('toggle');
             };
 
-            $scope.logout=function(){
-				$rootScope.esLogout=true;
+            $rootScope.logout=function(){
+		$rootScope.esLogout=true;
                 dataFactory.logout($rootScope.usuario.nroCliente)
                     .success(function(data,status){
-                        if ($rootScope.TipoSesion==null){
-                            $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
+                            $rootScope.usuario.logged_in=false;
                             $location.path("/login");
-                        }else{
-                            $window.location.href= $rootScope.usuario.cliente.URLVueltaBanco;
-                            $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
-                        }
-                    });
+                 });
             }
 
 
@@ -49,8 +44,6 @@ angular.module('SHAREBOOKSApp')
 	    {
             	$('.buttonLogin').attr("disabled", true);
        		var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
-		//$rootScope.usuario.logged_in=true;
-		//$location.url("/books");
 
             	dataFactory.login(cliente).error(function (error, status){
                         $scope.status.msgLogin = "Datos no validos";
@@ -121,7 +114,7 @@ angular.module('SHAREBOOKSApp')
            	});
        }
 
-    }]);
+}]);
 
 
 
@@ -217,3 +210,17 @@ angular.module('SHAREBOOKSApp')
 
 
 
+
+angular.module('SHAREBOOKSApp')
+    .controller('NotificationsCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+                $rootScope.status={"hayerror":false,"success":false,"msg":null};
+                $scope.notifications=
+                [
+                        {type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
+                        {type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'},
+			{type:'alert-success',title:'Solicitud',body:'Tu solicitud se realizo correctamente',link:''}
+                ];
+
+}]);

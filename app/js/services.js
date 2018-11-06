@@ -17,6 +17,10 @@ angular.module('SHAREBOOKSApp')
             return $http.post(urlBase + '/login/',user);
         };
 
+	dataFactory.logout = function (user) {
+            return $http.post(urlBase + '/logout/',user);
+        }
+
 	 //*** Listado de libros
         dataFactory.books = function (key) {
 	    var search=(key)? "?search="+key:"";	
