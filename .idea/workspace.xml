@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f8a4f07-951a-4833-9cfe-fe1ac2b2f410" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/app/views/notifications.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/controllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/controllers.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/js/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/services.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/register.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sharebooks/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/sharebooks/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sharebooks/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sharebooks/views.py" afterDir="false" />
     </list>
@@ -39,15 +42,15 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="39" />
-          <entry key="js" value="150" />
-          <entry key="py" value="180" />
+          <entry key="js" value="151" />
+          <entry key="py" value="187" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="39" />
-          <entry key="JavaScript" value="150" />
-          <entry key="Python" value="180" />
+          <entry key="JavaScript" value="151" />
+          <entry key="Python" value="187" />
         </counts>
       </usages-collector>
     </session>
@@ -57,8 +60,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
+            <state relative-caret-position="501">
+              <caret line="77" column="44" selection-start-line="77" selection-start-column="44" selection-end-line="77" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -67,7 +70,7 @@
         <entry file="file://$PROJECT_DIR$/app/js/services.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="344">
-              <caret line="21" column="48" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="48" />
+              <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -83,20 +86,23 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sharebooks/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
-              <caret line="18" column="48" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
+            <state relative-caret-position="277">
+              <caret line="30" selection-start-line="30" selection-end-line="30" />
+              <folding>
+                <element signature="e#634#666#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sharebooks/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="168">
-              <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+            <state relative-caret-position="542">
+              <caret line="83" column="24" lean-forward="true" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
               <folding>
                 <element signature="e#104#148#0" expanded="true" />
               </folding>
@@ -173,12 +179,12 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/app/js/services.js" />
         <option value="$PROJECT_DIR$/app/views/register.html" />
         <option value="$PROJECT_DIR$/app/js/controllers.js" />
-        <option value="$PROJECT_DIR$/sharebooks/urls.py" />
         <option value="$PROJECT_DIR$/bookrequest/models.py" />
         <option value="$PROJECT_DIR$/sharebooks/views.py" />
+        <option value="$PROJECT_DIR$/app/js/services.js" />
+        <option value="$PROJECT_DIR$/sharebooks/urls.py" />
       </list>
     </option>
   </component>
@@ -382,15 +388,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="84" column="44" selection-start-line="84" selection-start-column="44" selection-end-line="84" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="344">
-          <caret line="21" column="48" selection-start-line="21" selection-start-column="42" selection-end-line="21" selection-end-column="48" />
+        <state relative-caret-position="501">
+          <caret line="77" column="44" selection-start-line="77" selection-start-column="44" selection-end-line="77" selection-end-column="44" />
         </state>
       </provider>
     </entry>
@@ -400,13 +399,6 @@
           <folding>
             <element signature="e#0#32#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sharebooks/urls.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="18" column="48" selection-start-line="18" selection-start-column="48" selection-end-line="18" selection-end-column="48" />
         </state>
       </provider>
     </entry>
@@ -440,10 +432,27 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/sharebooks/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="61" lean-forward="true" selection-start-line="61" selection-end-line="61" />
+        <state relative-caret-position="542">
+          <caret line="83" column="24" lean-forward="true" selection-start-line="83" selection-start-column="24" selection-end-line="83" selection-end-column="24" />
           <folding>
             <element signature="e#104#148#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="344">
+          <caret line="24" column="8" selection-start-line="24" selection-start-column="8" selection-end-line="24" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sharebooks/urls.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="277">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#634#666#0" expanded="true" />
           </folding>
         </state>
       </provider>

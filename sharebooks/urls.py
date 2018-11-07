@@ -16,7 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url, include
-from sharebooks.views import login, home, signup
+from sharebooks.views import login,logout, home, signup
+
 
 from django.conf import settings
 from django.conf.urls.static import static
@@ -26,6 +27,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('login/', login),
 	path('signup/', signup),
+	path('logout/', logout),
 	path('home/', home),
 	url(r'^api-auth/', include('rest_framework.urls')),
 	url(r'^', include('books.urls')),
