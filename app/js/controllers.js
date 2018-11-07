@@ -45,9 +45,8 @@ angular.module('SHAREBOOKSApp')
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
 
-	    $scope.login=function() 
+	    $scope.login=function()
 	    {
-            	$('.buttonLogin').attr("disabled", true);
        		var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
 		//$rootScope.usuario.logged_in=true;
 		//$location.url("/books");
@@ -55,23 +54,44 @@ angular.module('SHAREBOOKSApp')
             	dataFactory.login(cliente).error(function (error, status){
                         $scope.status.msgLogin = "Datos no validos";
        	               	$scope.status.hayerrorLogin = true;
-               	        $('.buttonLogin').removeAttr("disabled");
                	}).success(function (data, status) {
-		
-			if (status == 200) 
+
+			if (status == 200)
 			{
                         	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
                  		$location.url("/books");
                     	}
                  });
-                        
+
 
              }
-        
-     
+	  $scope.signup=function()
+	    {
+       		var usuario = {'username': $scope.signupUsr.username, 'password': $scope.signupUsr.password,
+				'rpassword': $scope.signupUsr.rpassword, 'email': $scope.signupUsr.email};
+			//$rootScope.usuario.logged_in=true;
+			//$location.url("/books");
+
+            	dataFactory.signup(usuario).error(function (error, status){
+                        $scope.status.msgLogin = "Datos no validos";
+       	               	$scope.status.hayerrorLogin = true;
+               	}).success(function (data, status) {
+
+			if (status == 200)
+			{
+						$http.defaults.headers.common['Authorization'] = "Token "+data.token;
+		                $rootScope.usuario.logged_in=true;
+                 		$location.url("/home");
+                    	}
+                 });
+
+
+             }
+
+
 }]);
-		
+
 		
 
 angular.module('SHAREBOOKSApp')

@@ -11,6 +11,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from django.template import loader
 from django.http import HttpResponse
+from django.contrib.auth.models import User
 
 
 """
@@ -40,6 +41,34 @@ def login(request):
 
     token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},status=status.HTTP_200_OK)
+
+
+@csrf_exempt
+@api_view(["POST"])
+@permission_classes((AllowAny,))
+def signup(request):
+    username = request.data.get("username")
+    password = request.data.get("password")
+    rpassword = request.data.get("rpassword")
+    email = request.data.get("email")
+
+    if username is None or password is None:
+        return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
+
+    user = authenticate(username=username, password=password)
+
+    if not user:
+        return Response("Datos no validos",status=status.HTTP_400_BAD_REQUEST)
+
+    if rpassword is not password:
+        return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
+    token, _ = Token.objects.get_or_create(user=user)
+
+    user = User.objects.create_user(username, email, password)
+    user.save()
+
+    return Response({'token': token.key},status=status.HTTP_200_OK)
+
 
 
 @csrf_exempt
