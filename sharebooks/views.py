@@ -62,7 +62,7 @@ def signup(request):
     if username is None or password is None:
         return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
 
-    if rpassword is not password:
+    if rpassword != password:
         return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
 
     user = User.objects.create_user(username, email, password)
