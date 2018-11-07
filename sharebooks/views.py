@@ -62,18 +62,13 @@ def signup(request):
     if username is None or password is None:
         return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
 
-    user = authenticate(username=username, password=password)
-
-    if not user:
-        return Response("Datos no validos",status=status.HTTP_400_BAD_REQUEST)
-
     if rpassword is not password:
         return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
-    token, _ = Token.objects.get_or_create(user=user)
 
     user = User.objects.create_user(username, email, password)
     user.save()
 
+    token, _ = Token.objects.get_or_create(user=user)
     return Response({'token': token.key},status=status.HTTP_200_OK)
 
 
