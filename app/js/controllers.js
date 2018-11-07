@@ -39,6 +39,7 @@ angular.module('SHAREBOOKSApp')
             $rootScope.status = {"hayerror": false, "success": false, "msg": null};
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
+	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}	
 
 	    $scope.login=function()
 	    {
@@ -59,12 +60,11 @@ angular.module('SHAREBOOKSApp')
 
 
              }
-	  $scope.signup=function()
+	  
+	    $scope.signup=function()
 	    {
-       		var usuario = {'username': $scope.signupUsr.username, 'password': $scope.signupUsr.password,
+		var usuario = {'username': $scope.signupUsr.username, 'password': $scope.signupUsr.password,
 				'rpassword': $scope.signupUsr.rpassword, 'email': $scope.signupUsr.email};
-			//$rootScope.usuario.logged_in=true;
-			//$location.url("/books");
 
             	dataFactory.signup(usuario).error(function (error, status){
                         $scope.status.msgLogin = "Datos no validos";
@@ -73,9 +73,9 @@ angular.module('SHAREBOOKSApp')
 
 			if (status == 200)
 			{
-						$http.defaults.headers.common['Authorization'] = "Token "+data.token;
-		                $rootScope.usuario.logged_in=true;
-                 		$location.url("/home");
+				$http.defaults.headers.common['Authorization'] = "Token "+data.token;
+                                $rootScope.usuario.logged_in=true;
+                                $location.url("/books");
                     	}
                  });
 
