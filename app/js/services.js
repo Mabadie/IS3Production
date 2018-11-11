@@ -32,21 +32,21 @@ angular.module('SHAREBOOKSApp')
             return $http.get(urlBase + '/books/'+search);
         };
 
+	//*** Listado de mis libros
+	dataFactory.mybooks = function () {
+            return $http.get(urlBase + '/my-books/');
+        };
+
+
 	//solicitud de libro
 	dataFactory.bookrequest = function (req) {
             return $http.post(urlBase + '/book-request/',req);
         };
 
-
-
-        dataFactory.formatDate = function (dateString) {
-
-            var year        = dateString.substring(0,4);
-            var month       = dateString.substring(4,6);
-            var day         = dateString.substring(6,8);
-            return day + '/' + month +'/'+ year;
-
-        };
+	dataFactory.myrequests= function(req){
+		return $http.get(urlBase + '/book-request/',req);
+	};
 
         return dataFactory;
+
     }]);
