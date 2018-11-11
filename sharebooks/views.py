@@ -40,7 +40,7 @@ def login(request):
         return Response("Datos no validos",status=status.HTTP_400_BAD_REQUEST)
 
     token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},status=status.HTTP_200_OK)
+    return Response({'token': token.key,'id':user.id},status=status.HTTP_200_OK)
 
 @csrf_exempt
 @api_view(["POST"])
@@ -54,22 +54,26 @@ def logout(request):
 @api_view(["POST"])
 @permission_classes((AllowAny,))
 def signup(request):
-    username = request.data.get("username")
-    password = request.data.get("password")
-    rpassword = request.data.get("rpassword")
-    email = request.data.get("email")
+	username = request.data.get("username")
+	password = request.data.get("password")
+	rpassword = request.data.get("rpassword")
+	email = request.data.get("email")
 
-    if username is None or password is None:
-        return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
+	if username is None or password is None:
+        	return Response("Algo salio mal :(", status=status.HTTP_400_BAD_REQUEST)
 
-    if rpassword != password:
-        return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
+	if rpassword != password:
+        	return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
 
-    user = User.objects.create_user(username, email, password)
-    user.save()
+	e=User.objects.filter(email=email);
+	if not e is None:
+		return Response("Ya existe una cuenta asociada a este email", status=status.HTTP_400_BAD_REQUEST)	
+    	
+	user = User.objects.create_user(username, email, password)
+	user.save()
 
-    token, _ = Token.objects.get_or_create(user=user)
-    return Response({'token': token.key},status=status.HTTP_200_OK)
+	token, _ = Token.objects.get_or_create(user=user)
+	return Response({'token': token.key,'id':user.id},status=status.HTTP_200_OK)
 
 
 

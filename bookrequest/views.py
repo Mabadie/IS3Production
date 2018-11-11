@@ -17,7 +17,7 @@ class BookRequestList(APIView):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	def get(self, request, format=None):
-		bookrequests = BookRequest.objects.filter(user= request.user.id)
+		bookrequests = BookRequest.objects.filter(Q(user= request.user.id) | Q(book__owner=request.user.id))
 		serializer = BookRequestSerializer(bookrequests, many=True)
 		return Response(serializer.data)
 

@@ -1,21 +1,71 @@
 <style>
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+.round-circle
+{
+width: 60px;
+height: 60px;
+margin-right: 10px;
+border-radius: 50%;
+}
+
+.feed-element
+{
+  border:1px solid #ccc;
+  border-radius:3px;	
+  margin:3px;
+  padding:3px;  
+  cursor:pointer;	
+}
+
+.feed-element:hover
+{
+  background-color:#ccc;	
+}
+
+.text-muted
+{
+color:#888;
+}
+
 </style>
 
 <ul class="nav nav-tabs">
-  <li class="active"><a data-toggle="tab" data-target="#recibidos" >Recibidos</a></li>
-  <li><a data-toggle="tab" data-target="#concedidos">Concedidos</a></li>
+  <li class="active"><a data-toggle="tab" data-target="#recibidos" >Prestamos Recibidos</a></li>
+  <li><a data-toggle="tab" data-target="#concedidos">Prestamos Concedidos</a></li>
 </ul>
 
 
 <div class="tab-content">
   <div id="recibidos" class="tab-pane fade in active">
-    <h3>Prestamos Recibidos</h3>
-    <p>Some content.</p>
+	<div class="row">
+        <div ng-repeat="sh in recibidos">
+                <div class="feed-element" ng-click="requestDetail(sh)">
+			<div class='media-body'>
+				<img class='round-circle pull-right' src='{{sh.book.image}}'/>
+				<strong>{{sh.book.title}}</strong><br/>
+				<small>{{sh.book.author}}</small><br/>
+				<small class='text-muted'>{{formatDate(sh.timestamp)}} - {{formatState(sh.state)}}</small>
+			</div>
+                </div>
+        </div>
+	</div>
   </div>
-  <div id="concedidos" class="tab-pane fade">
-    <h3>Prestamos Concedidos</h3>
-    <p>Some content in menu 1.</p>
-  </div>
-</div>
 
+  <div id="concedidos" class="tab-pane fade">
+	<div class="row">
+        <div ng-repeat="sh in concedidos">
+		<div class="feed-element" ng-click="requestDetail(sh)">
+	                 <div class='media-body'>
+	                        <img class='round-circle pull-right' src='{{sh.book.image}}'/>
+                                <strong>{{sh.book.title}}</strong><br/>
+                                <small>{{sh.book.author}}</small><br/>
+                                <small class='text-muted'>{{formatDate(sh.timestamp)}} - {{formatState(sh.state)}}</small>
+        	         </div>
+        	</div>
+	</div>
+	</div>
+  </div>
+
+
+<div ng-include="'partials/show-request.html'"></div>

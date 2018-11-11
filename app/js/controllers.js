@@ -3,7 +3,7 @@ angular.module('SHAREBOOKSApp')
     .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window',
         function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window) {
 			
-	    $rootScope.usuario={"logged_in":false};
+	    $rootScope.usuario={"logged_in":false,id:null};
             $rootScope.status={"hayerror":false,"success":false,"msg":null};
 	    $rootScope.esLogout=false;
             $scope.status.hayerrorLogin=false;
@@ -28,6 +28,29 @@ angular.module('SHAREBOOKSApp')
                             $location.path("/login");
                  });
             }
+
+	$rootScope.formatDate = function (dateString) {
+	    
+            if(!dateString) return;	
+            var year        = dateString.substring(0,4);
+            var month       = dateString.substring(5,7);
+            var day         = dateString.substring(8,10);
+            return day + '/' + month +'/'+ year;
+
+        };
+
+        $rootScope.formatState = function (state) {
+
+                switch(state)
+                {
+                        case(0): return "Solicitud Enviada";
+                        case(1): return "Solicitud Aceptada";
+                        case(2): return "Entregado";
+                        case(3): return "Devuelto";
+                        case(4): return "Solicitud Rechazada";
+                }
+        };
+	
 
 
     }]);
@@ -54,6 +77,7 @@ angular.module('SHAREBOOKSApp')
 			{
                         	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
+				$rootScope.usuario.id=data.id;
                  		$location.url("/books");
                     	}
                  });
@@ -75,6 +99,7 @@ angular.module('SHAREBOOKSApp')
 			{
 				$http.defaults.headers.common['Authorization'] = "Token "+data.token;
                                 $rootScope.usuario.logged_in=true;
+				$rootScope.usuario.id=data.id;
                                 $location.url("/books");
                     	}
                  });
@@ -123,8 +148,7 @@ angular.module('SHAREBOOKSApp')
 				});	
 
 			 });
-	   }
-
+	}
 	  
        $scope.search=function()
        {
@@ -146,49 +170,13 @@ angular.module('SHAREBOOKSApp')
 	{
 			$rootScope.status={"hayerror":false,"success":false,"msg":null};
 			$scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
+
+			dataFactory.mybooks().success(function(data)
+                	{
+				$scope.books=data;				
+	                });					
 			
-			            $scope.books=
-			            [
-			                {
-			                    "title":"Cartero",
-    		                    "author":"Charles Bukowski",
-					            "year":"1971",
-					            "image":"http://media.bookshare.com/cartero.jpg"
-					        },
-					        {
-					            "title":"La maquina de follar",
-					            "author":"Charles Bukowski",
-					            "year":"1978",
-					            "image":"http://media.bookshare.com/follar.jpg"
-					        },
-					        {
-					            "title":"Cartero",
-					            "author":"Charles Bukowski",
-					            "year":"1971",
-					            "image":"http://media.bookshare.com/cartero.jpg"
-					         },
-					         {
-																																																														                    "title":"La maquina de follar",
-				               	"author":"Charles Bukowski",
-				               "year":"1978",
-				               "image":"http://media.bookshare.com/follar.jpg"
-						     },
-						     {
-						       "title":"Cartero",
-						       "author":"Charles Bukowski",
-						       "year":"1971",
-						       "image":"http://media.bookshare.com//cartero.jpg"
-						     },
-						     {
-						       "title":"La maquina de follar",
-						       "author":"Charles Bukowski",
-						       "year":"1978",
-						       "image":"http://media.bookshare.com//follar.jpg"
-						     }
-
-                           ];
-
-
+			
 				$scope.delete=function(book)
 				{
 					 var modalOptions = {
@@ -236,6 +224,7 @@ angular.module('SHAREBOOKSApp')
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
     {
                 $rootScope.status={"hayerror":false,"success":false,"msg":null};
+
                 $scope.notifications=
                 [
                         {type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
@@ -243,4 +232,38 @@ angular.module('SHAREBOOKSApp')
 			{type:'alert-success',title:'Solicitud',body:'Tu solicitud se realizo correctamente',link:''}
                 ];
 
+}]);
+
+
+
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('SharedCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+                $rootScope.status={"hayerror":false,"success":false,"msg":null};
+		$scope.concedidos=[];
+		$scope.recibidos=[];
+		$scope.request={};
+                	
+		dataFactory.myrequests().success(function(data)
+                {
+
+	                for(var sh in data)
+        	        {
+                	        if(data[sh].user==$rootScope.usuario.id)
+                        	        $scope.recibidos.push(data[sh]);
+	                        else
+        	                        $scope.concedidos.push(data[sh]);
+                	}
+
+                });
+
+		
+		$scope.requestDetail=function(req)
+		{
+			$scope.request=req;
+                        $('#showRequestModal').modal('toggle');			
+		}
 }]);
