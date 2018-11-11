@@ -2,15 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f8a4f07-951a-4833-9cfe-fe1ac2b2f410" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app/partials/show-request.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/controllers.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/controllers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/js/services.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/js/services.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/views/shared.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/views/shared.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookrequest/serializers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/bookrequest/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/config/web.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/web.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sharebooks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/sharebooks/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sharebooks/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/sharebooks/views.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +27,7 @@
           <entry key="Makefile" value="2" />
           <entry key="html" value="19" />
           <entry key="jpg" value="1" />
-          <entry key="js" value="14" />
+          <entry key="js" value="15" />
           <entry key="orig" value="1" />
           <entry key="py" value="25" />
         </counts>
@@ -43,7 +36,7 @@
         <counts>
           <entry key="HTML" value="19" />
           <entry key="Image" value="1" />
-          <entry key="JavaScript" value="14" />
+          <entry key="JavaScript" value="15" />
           <entry key="PLAIN_TEXT" value="3" />
           <entry key="Python" value="25" />
         </counts>
@@ -51,15 +44,15 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="html" value="48" />
-          <entry key="js" value="210" />
-          <entry key="py" value="203" />
+          <entry key="js" value="212" />
+          <entry key="py" value="204" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="HTML" value="48" />
-          <entry key="JavaScript" value="210" />
-          <entry key="Python" value="203" />
+          <entry key="JavaScript" value="212" />
+          <entry key="Python" value="204" />
         </counts>
       </usages-collector>
     </session>
@@ -67,10 +60,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/views/login.html">
+        <entry file="file://$PROJECT_DIR$/app/js/services.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="425">
-              <caret line="25" selection-start-line="25" selection-end-line="25" />
+            <state relative-caret-position="307">
+              <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
             </state>
           </provider>
         </entry>
@@ -80,11 +73,11 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="42">
-              <caret line="271" column="28" selection-start-line="271" selection-start-column="28" selection-end-line="271" selection-end-column="28" />
+            <state relative-caret-position="331">
+              <caret line="274" column="14" selection-start-line="274" selection-start-column="14" selection-end-line="274" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -110,17 +103,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/config/web.config.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="51">
-              <caret line="3" selection-start-line="2" selection-end-line="3" />
+            <state relative-caret-position="34">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sharebooks/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2652">
-              <caret line="156" column="29" selection-start-line="156" selection-start-column="29" selection-end-line="156" selection-end-column="29" />
+            <state relative-caret-position="2351">
+              <caret line="159" column="1" selection-start-line="159" selection-start-column="1" selection-end-line="159" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -168,13 +161,13 @@
         <option value="$PROJECT_DIR$/bookrequest/models.py" />
         <option value="$PROJECT_DIR$/app/js/services.js" />
         <option value="$PROJECT_DIR$/sharebooks/views.py" />
-        <option value="$PROJECT_DIR$/app/config/web.config.js" />
-        <option value="$PROJECT_DIR$/sharebooks/settings.py" />
         <option value="$PROJECT_DIR$/sharebooks/urls.py" />
         <option value="$PROJECT_DIR$/books/urls.py" />
         <option value="$PROJECT_DIR$/app/js/app.js" />
         <option value="$PROJECT_DIR$/app/views/account.html" />
         <option value="$PROJECT_DIR$/app/js/controllers.js" />
+        <option value="$PROJECT_DIR$/app/config/web.config.js" />
+        <option value="$PROJECT_DIR$/sharebooks/settings.py" />
       </list>
     </option>
   </component>
@@ -461,13 +454,6 @@
     <entry file="file://$PROJECT_DIR$/app/partials/new-book.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/js/services.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/register.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -486,20 +472,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
           <caret line="10" selection-start-line="10" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/config/web.config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="51">
-          <caret line="3" selection-start-line="2" selection-end-line="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/sharebooks/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2652">
-          <caret line="156" column="29" selection-start-line="156" selection-start-column="29" selection-end-line="156" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -529,10 +501,31 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/js/services.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="307">
+          <caret line="43" column="10" selection-start-line="43" selection-start-column="10" selection-end-line="43" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="42">
-          <caret line="271" column="28" selection-start-line="271" selection-start-column="28" selection-end-line="271" selection-end-column="28" />
+        <state relative-caret-position="331">
+          <caret line="274" column="14" selection-start-line="274" selection-start-column="14" selection-end-line="274" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/config/web.config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sharebooks/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2351">
+          <caret line="159" column="1" selection-start-line="159" selection-start-column="1" selection-end-line="159" selection-end-column="1" />
         </state>
       </provider>
     </entry>
