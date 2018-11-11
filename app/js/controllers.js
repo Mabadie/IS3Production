@@ -244,3 +244,18 @@ angular.module('SHAREBOOKSApp')
                 ];
 
 }]);
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('AccountCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+                $rootScope.status={"hayerror":false,"success":false,"msg":null};
+                $scope.notifications=
+                [
+                        {type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
+                        {type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'},
+			{type:'alert-success',title:'Solicitud',body:'Tu solicitud se realizo correctamente',link:''}
+                ];
+
+}]);

@@ -10,7 +10,7 @@ urlpatterns = [
     url(r'^books/(?P<search>[A-Za-z]+)/$', views.BookList.as_view()),
     url(r'^my-books/(?P<id>[0-9]+)/$', views.BookDetail.as_view()),
     url(r'^my-books/$', views.MyBookList.as_view()),
-    path('my-books/insert/', insert),
-    path('my-books/update/', update),
-    path('my-books/delete/', delete)
+    path(r'^my-books/insert/', insert),
+    path(r'^my-books/update/', update),
+    path(r'^my-books/delete/', delete)
 ]

@@ -8,6 +8,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/shared', {controller: 'SharedCtrl',templateUrl: './views/shared.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
 	$routeProvider.when('/register', {controller: 'LoginCtrl',templateUrl: './views/register.html'});
+	$routeProvider.when('/account', {controller: 'AccountCtrl',templateUrl: './views/account.html'});
 	$routeProvider.when('/notifications', {controller: 'NotificationsCtrl',templateUrl: './views/notifications.html'});
 
     	$routeProvider.otherwise({ redirectTo: '/books' });
