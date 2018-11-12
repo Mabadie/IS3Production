@@ -32,5 +32,6 @@ urlpatterns = [
 	url(r'^api-auth/', include('rest_framework.urls')),
 	url(r'^', include('books.urls')),
 	url(r'^', include('bookrequest.urls')),
+	url(r'^', include('Users.urls')),
 	url(r'^$', RedirectView.as_view(url='app/index.html')),
 ]+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

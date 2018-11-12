@@ -1,12 +1,33 @@
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-<br/>
-
-
 <div class="col-md-6 col-md-offset-3">
-    <h2>Crear Usuario</h2>
+    <h2>Administra tu Perfil!</h2>
+    <div ng-if="errorMsg">
+        {{ errorMsg }}
+    </div>
+    <div>
+        <h3>Nombre de Usuario: {{ logedUser.username}}</h3>
+        <p>Email: {{ logedUser.email }}</p>
+        <row>
+            <button class="btn btn-md" type='button'  ng-click='updateNameModal();'>
+            <span class="glyphicon glyphicon-edit"></span>&nbsp;Cambiar Nombre de Usuario
+            </button>
+        </row>
+        <row>
+            <button class="btn btn-md" type='button'  ng-click='updateEmailModal();'>
+            <span class="glyphicon glyphicon-edit"></span> Cambiar Email
+            </button>
+        </row>
+        <row>
+            <button class="btn btn-md" type='button'  ng-click='updatePasswordModal();'>Modificar Contraseña</button>
+        </row>
+        <div class="col-lg-12 col-sm-12 col-xs-12 alert alert-success" ng-show="showPasswordMessage">
+            <button type="button" class="close" ng-click="showPasswordMessage=false">&times;</button>
+            <strong>La contraseña se modifico exitosamente</strong>
+
+       </div>
+
+    </div>
+
 
 </div>
+
+<div ng-include="'partials/user-modals.html'"></div>

@@ -30,8 +30,8 @@ angular.module('SHAREBOOKSApp')
             }
 
 	$rootScope.formatDate = function (dateString) {
-	    
-            if(!dateString) return;	
+
+            if(!dateString) return;
             var year        = dateString.substring(0,4);
             var month       = dateString.substring(5,7);
             var day         = dateString.substring(8,10);
@@ -50,7 +50,7 @@ angular.module('SHAREBOOKSApp')
                         case(4): return "Solicitud Rechazada";
                 }
         };
-	
+
 
 
     }]);
@@ -62,7 +62,7 @@ angular.module('SHAREBOOKSApp')
             $rootScope.status = {"hayerror": false, "success": false, "msg": null};
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
-	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}	
+	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}
 
 	    $scope.login=function()
 	    {
@@ -77,6 +77,7 @@ angular.module('SHAREBOOKSApp')
 			{
                         	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
+		                $rootScope.usuario.id=data.id;
                  		$location.url("/books");
                     	}
                  });
@@ -272,28 +273,74 @@ angular.module('SHAREBOOKSApp')
     .controller('AccountCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
     {
-                $rootScope.status={"hayerror":false,"success":false,"msg":null};
-		$scope.concedidos=[];
-		$scope.recibidos=[];
-		$scope.request={};
-
-		dataFactory.myrequests().success(function(data)
-                {
-
-	                for(var sh in data)
-        	        {
-                	        if(data[sh].user==$rootScope.usuario.id)
-                        	        $scope.recibidos.push(data[sh]);
-	                        else
-        	                        $scope.concedidos.push(data[sh]);
-                	}
-
-                });
+    	$scope.profileUsr = {'username': null,'actualPassword':null, 'password': null,'rpassword': null, 'email':null}
+    	$scope.errorMsg=null;
+    	$scope.showPasswordMessage = false;
+    	var request = {'userId':$rootScope.usuario.id};
+		dataFactory.getUser(request).success(function(data)
+			{
+				$scope.errorMsg=null;
+				$rootScope.logedUser=data;
+			}).error($scope.errorMsg="Ups, ocurrio un error al obtener los datos");
 
 
-		$scope.requestDetail=function(req)
+		$scope.updateNameModal=function()
 		{
-			$scope.request=req;
-                        $('#showRequestModal').modal('toggle');
+			$('#modifyNameModal').modal('toggle');
 		}
+
+		$scope.updateName=function()
+		{
+			var reqUpdateName = {'userId':$rootScope.usuario.id, 'type':'name', 'username':$scope.profileUsr.username};
+
+			dataFactory.updateUser(reqUpdateName).success(function(response) {
+                $rootScope.logedUser = response
+				$scope.errorMsg = null;;
+            });
+
+			$('#modifyNameModal').modal('hide');
+		}
+
+		$scope.updateEmailModal=function()
+		{
+			$('#modifyEmailModal').modal('toggle');
+		}
+
+		$scope.updateEmail=function()
+		{
+			var reqUpdateEmail = {'userId':$rootScope.usuario.id, 'type':'email', 'email':$scope.profileUsr.email};
+			dataFactory.updateUser(reqUpdateEmail).success(function(response) {
+                $rootScope.logedUser = response;
+                $scope.errorMsg = null;
+
+            });
+			$('#modifyEmailModal').modal('hide');
+		}
+
+		$scope.updatePasswordModal=function()
+		{
+			$('#modifyPasswordModal').modal('toggle');
+		}
+
+		$scope.updatePassword=function()
+		{
+			var reqUpdatePassword = {'userId':$rootScope.usuario.id, 'type':'password',
+				'actualPassword': $scope.profileUsr.actualPassword,
+				'password':$scope.profileUsr.password,
+				'rpassword':$scope.profileUsr.rpassword };
+			dataFactory.updateUser(reqUpdatePassword).success(function (response) {
+				$scope.errorMsg = null;
+				$scope.showPasswordMessage = true;
+            }).error(function(error){
+				console.log(error);
+				if(error.status=400){
+					$scope.errorMsg = error.message;
+				}
+			});
+			$('#modifyPasswordModal').modal('hide');
+
+		}
+
+
+
 }]);

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'books.apps.BookConfig',
     'bookrequest.apps.BookrequestConfig',
+    'Users.apps.UsersConfig',
     # 'django.db.backends.mysql'
     # 'push_notifications',
 ]

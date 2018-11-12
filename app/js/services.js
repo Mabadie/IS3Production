@@ -8,7 +8,7 @@ angular.module('SHAREBOOKSApp')
         var dataFactory = {};
 
 	//*** Auth provider service
-	dataFactory.authprovider = function (ctrl) {
+	    dataFactory.authprovider = function (ctrl) {
 		return $http.get(urlBase + '/Auth-Provider/resource/'+ ctrl);
         };
 
@@ -24,7 +24,7 @@ angular.module('SHAREBOOKSApp')
 
 	    dataFactory.logout = function (user) {
             return $http.post(urlBase + '/logout/',user);
-        }
+        };
 
 	 //*** Listado de libros
         dataFactory.books = function (key) {
@@ -46,6 +46,14 @@ angular.module('SHAREBOOKSApp')
 	dataFactory.myrequests= function(req){
 		return $http.get(urlBase + '/book-request/',req);
 	};
+
+	dataFactory.getUser = function(userId){
+	    return $http.post(urlBase + '/getUser/',userId);
+    }
+
+    dataFactory.updateUser = function(request){
+	    return $http.put(urlBase +'/getUser/', request);
+    }
 
         return dataFactory;
 
