@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Notification(models.Model):
+	
 	id= models.AutoField(primary_key=True)
 	to=  models.ForeignKey(User,on_delete=models.CASCADE,null=True, blank=True )
 	request= models.ForeignKey(BookRequest,on_delete=models.CASCADE,null=True, blank=True)
@@ -13,7 +14,6 @@ class Notification(models.Model):
 	title= models.CharField(max_length=100, blank=True)
 	body = models.CharField(max_length=100, blank=True)
 	link = models.CharField(max_length=100, blank=True)        
-	timestamp = models.DateTimeField(default=datetime.date.today)
 	done =models.BooleanField(default=False);
 
 	def done(self):
@@ -35,7 +35,7 @@ class Notification(models.Model):
 		n.save();
 
 	class Meta:
-		ordering = ('timestamp',)
+		ordering = ('-id',)
 		
 
 

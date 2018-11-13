@@ -19,8 +19,11 @@ class BookRequest(models.Model):
 		(2,'Entregado-SinConfirmacion'),
 		(3,'Entregado-Confirmado'),
 		(4,'Devuelto-SinConfirmacion'),
-		(5,'Devuelto-Confirmado'),
+		(5,'Devuelto-Confirmado-Sin-Calificar'),
 		(6,'Rechazada/Finalizada'),
+		(7,'Devuelto-Calificado-Owner'),
+		(8,'Devuelto-Calificado-Reader'),
+		(9,'Devuelto')
 	)
 
 	user= models.ForeignKey(User,on_delete=models.CASCADE)
@@ -31,8 +34,6 @@ class BookRequest(models.Model):
 
 	def accept(self):
 		#owner=yo && state=0
-		book=Book.objects.get(id=self.book.id)
-		book.share()
 		self.state=1
 		self.save()
 		#genera notificacion de aceptacion

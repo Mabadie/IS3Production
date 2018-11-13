@@ -26,10 +26,10 @@ class BookList(APIView):
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
     def get(self, request, format=None):
-        books = Book.objects.filter(~Q(owner=self.request.user.id))
+        books = Book.objects.filter(~Q(owner=self.request.user.id)).filter(Q(aviable=True))
 
         if request.GET.get('search'):
-            books = books.filter(title__icontains=self.request.GET['search'])
+            books = books.filter(title__icontains=self.request.GET['search']).filter(Q(aviable=True))
         serializer = BookSerializer(books, many=True)
         return Response(serializer.data)
 

@@ -33,8 +33,8 @@ class BookRequestList(APIView):
 			Notification.send(request.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Solicitud del libro "'+book.title+'" realizada correctamente', '#')
 			Notification.send(bq.book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Tienes una solicitud  pendiente del libro "'+book.title+'"', '#')
 			return Response(serializer.data, status=status.HTTP_201_CREATED)
+		#return Response("No fue posible realizar la solicitud", status=status.HTTP_400_BAD_REQUEST)
 		return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
 
 class BookRequestConfirm(APIView):
 
@@ -46,15 +46,20 @@ class BookRequestConfirm(APIView):
 			try:
 				bq = BookRequest.objects.get(id= request.data['id'])
 				book=Book.objects.get(id=bq.book_id)
+				if not book.aviable:
+					 return Response("No fue posible realizar la confirmacion", status=status.HTTP_400_BAD_REQUEST)
 				if book.owned_by(request.user) and bq.state==0:
-					bq.accept();
-					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Tu solicitud del libro "'+book.title+'" fue aceptada, contacta al propietario '+book.owner.email, '#')
+					bq.accept()
+					book.hide()
+					Notification.send(bq.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Tu solicitud del libro "'+book.title+'" fue aceptada, contacta al propietario '+book.owner.email, '#')
 					Notification.send(request.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Has aceptado la solicitud del libro "'+book.title+'" debes confirmar la entrega:', '#')
 					return Response(status=status.HTTP_200_OK)
-			except:			
-				print()
+			except  Exception as ex:			
+				template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+				message = template.format(type(ex).__name__, ex.args)
+				print (message)
 				
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No fue posible realizar la confirmacion", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -71,12 +76,13 @@ class BookRequestDeliver(APIView):
 				if book.owned_by(request.user) and bq.state==1:
 					bq.deliver()
 					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la entrega  del libro "'+book.title+'"; debes confirmar recepcion:', '#')
+					Notification.send(request.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Has confirmado la entrega  del libro "'+book.title+'"', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 
 				print()
 
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No fue posible realizar la entrega", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -101,7 +107,7 @@ class BookRequestConfirmDelivered(APIView):
 
 				print()
 
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No feu posible confirmar la entrega", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -121,12 +127,13 @@ class BookRequestReturn(APIView):
 				if bq.user==request.user and bq.state==3:
 					bq.give_back();
 					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la devolucion del libro "'+book.title+'"; debes confirmar la recepcion', '#')
+					Notification.send(request.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Devolucion  del libro "'+book.title+'" realizada correctamente', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 
 				print()
 
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No fue posible realizar la devolucion", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -144,14 +151,15 @@ class BookRequestConfirmReturned(APIView):
 				book=Book.objects.get(id=bq.book_id)
 				if book.owned_by(request.user) and bq.state==4:
 					bq.confirm_returned();
+					book.show()
 					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la recepcion de la devolucion  del libro "'+book.title+'"; recuerda calificar tu experiencia', '#')
-					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Recuerda calificar tu experiencia','#')
+					Notification.send(book.owner, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Has confirmado la recepcion del libro "'+book.title+'"; recuerda calificar tu experiencia','#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 		
 				print()
 
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No fue posible confirmar la devolucion", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -174,4 +182,4 @@ class BookRequestReject(APIView):
 				print ()
 
 
-		return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("No fue posible rechazar la solicitud", status=status.HTTP_400_BAD_REQUEST)

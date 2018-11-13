@@ -329,9 +329,9 @@ angular.module('SHAREBOOKSApp')
 			else
 			if(req.book.owner==$rootScope.usuario.id && req.state==4)$('#confirmreturnedRequestModal').modal('toggle');
 			else
-			if(req.user==$rootScope.usuario.id && req.state==5)alert("calificar libro");
+			if(req.user==$rootScope.usuario.id && req.state>=5 && req.state<9)alert("calificar libro");
 			else
-			if(req.book.owner==$rootScope.usuario.id && req.state==5)alert("calificar lector");
+			if(req.book.owner==$rootScope.usuario.id && req.state>=5 && req.state<9)alert("calificar lector");
 			else
 			$('#showRequestModal').modal('toggle');
 		}
