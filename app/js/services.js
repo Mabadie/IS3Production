@@ -72,6 +72,11 @@ angular.module('SHAREBOOKSApp')
             return $http.post(urlBase + '/book-request-reject/',req);
         };
 
+	dataFactory.bookrequestCalification= function (req) {
+            return $http.post(urlBase + '/book-request-calification/',req);
+        };
+
+
 	//lista de solicitudes realizadas y recibidas
 	dataFactory.myrequests= function(req){
 		return $http.get(urlBase + '/book-request/',req);

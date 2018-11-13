@@ -29,6 +29,8 @@ class BookRequest(models.Model):
 	user= models.ForeignKey(User,on_delete=models.CASCADE)
 	book= models.ForeignKey(Book,on_delete=models.CASCADE)
 	state= models.IntegerField(choices=REQUEST_STATES,default=0)
+	calif_owner= models.IntegerField(default=0)
+	calif_reader= models.IntegerField(default=0)
 	timestamp = models.DateTimeField(default=datetime.date.today)
 	
 
@@ -67,6 +69,21 @@ class BookRequest(models.Model):
 		self.state=6
 		self.save()
 		#genera notificacion de rechazo
+
+
+	def calification_owner(self):
+		if(self.state==5):
+			self.state=7
+		else:
+			self.state=9
+		self.save()
+
+	def calification_reader(self):
+		if(self.state==5):
+			self.state=8
+		else:
+			self.state=9
+		self.save()
 
 	class Meta:
 		unique_together = (("user", "book"),)

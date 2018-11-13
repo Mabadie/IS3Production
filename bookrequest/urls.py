@@ -10,7 +10,8 @@ urlpatterns = [
 	url(r'^book-request-confirm-delivered/$', views.BookRequestConfirmDelivered.as_view()),
 	url(r'^book-request-return/$', views.BookRequestReturn.as_view()),
 	url(r'^book-request-confirm-returned/$', views.BookRequestConfirmReturned.as_view()),
-	url(r'^book-request-reject/$', views.BookRequestReject.as_view())
+	url(r'^book-request-reject/$', views.BookRequestReject.as_view()),
+	url(r'^book-request-calification/$', views.BookRequestCalification.as_view())
 ]
 
 
