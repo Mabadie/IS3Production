@@ -10,10 +10,10 @@ from rest_framework.response import Response
 
 class NotificationsList(APIView):
 
-    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
-    def get(self, request, format=None):
-        notifications = Notification.objects.filter(Q(to=self.request.user.id))
-        serializer = NotificationSerializer(notifications, many=True)
-        return Response(serializer.data)
+	def get(self, request, format=None):
+		notifications = Notification.objects.filter(Q(to=self.request.user.id))
+		serializer = NotificationSerializer(notifications, many=True)
+		return Response(serializer.data)
 

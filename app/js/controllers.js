@@ -11,6 +11,7 @@ angular.module('SHAREBOOKSApp')
 	    $rootScope.notifications=[];
 	    $rootScope.interval=null;	 		   
 	    $rootScope.notifCount="";
+	    $rootScope.notiflag=false;	
 	
             $('nav').addClass('shrink');
 	    $(".nav a").on("click", function(){
@@ -55,27 +56,46 @@ angular.module('SHAREBOOKSApp')
                         case(2): return "Entregado-No confirmado";
 			case(3): return "Entregado";
                         case(4): return "Devuelto-No confirmado";
-			case(5): return "Devuelto";
+			case(5): return "Devuelto-Pendiente calificacion";
                         case(6): return "Solicitud Rechazada";
+			case(7): return "Devuelto-Pendiente calificacion";
+			case(8): return "Devuelto-Pendiente calificacion";
+			case(9): return "Devuelto";
                 }
         };
 
+	var getmynotifications=function()
+	{
+		dataFactory.mynotifications().success(function(data)
+                        {
+                                var count=0;
+                                for(var n in data){
+                                        if(!data[n].done) count++;
+                                }
+
+				if(!$rootScope.notiflag)
+				{
+					$rootScope.notifCount=(count==0)?"":count;
+					$rootScope.notifications=data;
+					$rootScope.notiflag=true;
+                                }else
+				{
+					if(count)
+					{
+						$rootScope.notifCount=(count==0)?"":count;
+	                                        $rootScope.notifications=data;
+					}
+				}
+				
+
+                        });
+	}
+
+
 	$rootScope.startNotifications=function()
 	{
-		$rootScope.interval=setInterval(function(){
-			dataFactory.mynotifications().success(function(data)
-			{
-				//if($rootScope.notifications.length == data.length) return;
-				var count=0;
-				for(var n in $rootScope.notifications){ 
-					if(!$rootScope.notifications[n].done) count++;
-				}
-
-				$rootScope.notifCount=(count==0)?"":count;
-				$rootScope.notifications=data;
-			});
-
-		},3000);	
+		getmynotifications();
+		$rootScope.interval=setInterval(getmynotifications,3000);	
 	}
 
 	$rootScope.stopNotifications=function()
@@ -314,11 +334,18 @@ angular.module('SHAREBOOKSApp')
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
     {
                 $rootScope.status={"hayerror":false,"success":false,"msg":null};
+		$rootScope.notifCount="";
 		$scope.request={};
+		$scope.calification=0;
+		$scope.setcalif=function(c){$scope.calification=c; }
 		
 		$scope.showDetail=function(req)
 		{
+			$rootScope.notifCount="";
 			$scope.request=req;
+			$scope.calification=0;
+			$scope.title=(req.user==$rootScope.usuario.id)? "Calificar este libro":"Calificar este prestamo";
+
 			if(req.book.owner==$rootScope.usuario.id && req.state==0)$('#acceptRequestModal').modal('toggle');
 			else
 			if(req.book.owner==$rootScope.usuario.id && req.state==1)$('#deliverRequestModal').modal('toggle');
@@ -329,9 +356,9 @@ angular.module('SHAREBOOKSApp')
 			else
 			if(req.book.owner==$rootScope.usuario.id && req.state==4)$('#confirmreturnedRequestModal').modal('toggle');
 			else
-			if(req.user==$rootScope.usuario.id && req.state>=5 && req.state<9)alert("calificar libro");
+			if((req.state==5 || req.state==8) && req.user==$rootScope.usuario.id)$('#calificationRequestModal').modal('toggle');
 			else
-			if(req.book.owner==$rootScope.usuario.id && req.state>=5 && req.state<9)alert("calificar lector");
+			if((req.state==5 || req.state==7) && req.book.owner==$rootScope.usuario.id)$('#calificationRequestModal').modal('toggle');
 			else
 			$('#showRequestModal').modal('toggle');
 		}
@@ -447,6 +474,27 @@ angular.module('SHAREBOOKSApp')
                         });
 
                 }
+
+		
+		$scope.calificar=function()
+		{
+			if($scope.calification==0){ alert("Seleccione una calificacion"); return; }
+			
+			dataFactory.bookrequestCalification({'id':$scope.request.id,'calif_owner':$scope.calification,'calif_reader':$scope.calification}).success(function()
+                        {
+                                $('#calificationRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Su calificacion ha sido enviada"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+
+		}
 
 
 

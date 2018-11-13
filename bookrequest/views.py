@@ -101,7 +101,7 @@ class BookRequestConfirmDelivered(APIView):
 				if bq.user==request.user and bq.state==2:
 					bq.confirm_delivered()
 					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la recepcion  del libro "'+book.title+'"', '#')
-					Notification.send(bq.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Disfruta de la lectura!! recurda realizar la devolucion cuando finalices', '#')
+					Notification.send(bq.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Disfruta de la lectura!! recuerda realizar la devolucion cuando finalices', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 
@@ -183,3 +183,38 @@ class BookRequestReject(APIView):
 
 
 		return Response("No fue posible rechazar la solicitud", status=status.HTTP_400_BAD_REQUEST)
+
+
+
+class BookRequestCalification(APIView):
+
+	def post(self,request,format=None):
+
+		serializer = BookRequestPutSerializer(data=request.data)
+
+		if serializer.is_valid():
+			try:
+				bq = BookRequest.objects.get(id= request.data['id'])
+				book=Book.objects.get(id=bq.book_id)
+				if book.owned_by(request.user) and bq.state>=5:
+					bq.calif_reader=request.data['calif_reader']
+					bq.calification_reader();
+					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Te calificaron con '+str(request.data['calif_reader'])+' estrellas', '#')
+					Notification.send(request.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Has calificado este prestamo con '+str(request.data['calif_reader'])+' estrellas', '#')
+					return Response(status=status.HTTP_200_OK)
+				
+				if request.user==bq.user and bq.state>=5:
+					bq.calif_owner=request.data['calif_owner']
+					bq.calification_owner();
+					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Te calificaron con '+str(request.data['calif_owner'])+' estrellas', '#')
+					Notification.send(request.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Has calificado este libro  con '+str(request.data['calif_owner'])+' estrellas', '#')
+					return Response(status=status.HTTP_200_OK)
+
+			except Exception as ex:
+                                template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                                message = template.format(type(ex).__name__, ex.args)
+                                print (message)
+
+
+		return Response("No fue posible calificar", status=status.HTTP_400_BAD_REQUEST)
+

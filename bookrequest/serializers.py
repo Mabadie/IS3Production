@@ -31,4 +31,4 @@ class BookRequestPutSerializer(serializers.ModelSerializer):
 
         class Meta:
                 model = BookRequest
-                fields = ('id',)
+                fields = ('id','calif_owner','calif_reader')
