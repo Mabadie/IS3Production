@@ -55,6 +55,10 @@ angular.module('SHAREBOOKSApp')
 	    return $http.put(urlBase +'/getUser/', request);
     }
 
+    dataFactory.createBook = function(request){
+	    return $http.post(urlBase + '/my-books/insert/',request);
+    }
+
         return dataFactory;
 
     }]);

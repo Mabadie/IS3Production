@@ -25,6 +25,7 @@ angular.module('SHAREBOOKSApp')
                 dataFactory.logout($rootScope.usuario.nroCliente)
                     .success(function(data,status){
                             $rootScope.usuario.logged_in=false;
+                            $rootScope.logedUser = null;
                             $location.path("/login");
                  });
             }
@@ -79,6 +80,12 @@ angular.module('SHAREBOOKSApp')
 		                $rootScope.usuario.logged_in=true;
 		                $rootScope.usuario.id=data.id;
                  		$location.url("/books");
+                 		var request = {'userId':$rootScope.usuario.id};
+						dataFactory.getUser(request).success(function(data)
+						{
+							$rootScope.logedUser=data;
+						});
+
                     	}
                  });
 
@@ -102,6 +109,11 @@ angular.module('SHAREBOOKSApp')
                                 $location.url("/books");
                     	}
                  });
+            	var request = {'userId':$rootScope.usuario.id};
+				dataFactory.getUser(request).success(function(data)
+				{
+					$rootScope.logedUser=data;
+				});
 
 
              }
@@ -200,7 +212,24 @@ angular.module('SHAREBOOKSApp')
 
 				$scope.new=function()
 				{
-                                        $('#newBookModal').modal('toggle');
+					$('#newBookModal').modal('toggle');
+				}
+
+				$scope.newBook=function()
+				{
+					var reqCreateBook = {
+						"owner":$rootScope.logedUser.username,
+						"title":$scope.book.title,
+						"year":$scope.book.year,
+						"author":$scope.book.author,
+						"image":$scope.book.image
+					};
+					dataFactory.createBook(reqCreateBook);
+					dataFactory.mybooks().success(function(data)
+                	{
+						$scope.books=data;
+	                });
+					$('#newBookModal').modal('hide');
 				}
 
 				$scope.editBook=function()
