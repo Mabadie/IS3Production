@@ -2,33 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f8a4f07-951a-4833-9cfe-fe1ac2b2f410" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/config/web.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/config/web.config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0002_auto_20180826_0246.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0003_auto_20180826_0252.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0004_auto_20180826_0252.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0005_bookrequest_state.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0006_auto_20180828_2135.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0007_auto_20181112_0016.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bookrequest/migrations/0008_auto_20181113_1434.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/books/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0002_book_image.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0003_book_owner.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0004_auto_20180823_0830.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0005_auto_20180823_0831.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0006_auto_20180823_0931.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0007_auto_20180823_1630.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0008_auto_20180823_1631.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0009_auto_20180823_1649.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0010_auto_20180823_1730.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0011_auto_20180823_1731.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0012_auto_20180824_0153.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/books/migrations/0013_auto_20181012_0852.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/notifications/migrations/0001_initial.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/migrations/0002_notification_done.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/migrations/0003_auto_20181113_0131.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/notifications/migrations/0004_auto_20181113_1201.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sharebooks/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/sharebooks/settings.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -143,8 +120,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3536">
-              <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
+            <state relative-caret-position="3876">
+              <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
             </state>
           </provider>
         </entry>
@@ -337,6 +314,17 @@
             <path>
               <item name="BookShare" type="b2602c69:ProjectViewProjectNode" />
               <item name="BookShare" type="462c0819:PsiDirectoryNode" />
+              <item name="notifications" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BookShare" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BookShare" type="462c0819:PsiDirectoryNode" />
+              <item name="notifications" type="462c0819:PsiDirectoryNode" />
+              <item name="migrations" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="BookShare" type="b2602c69:ProjectViewProjectNode" />
+              <item name="BookShare" type="462c0819:PsiDirectoryNode" />
               <item name="sharebooks" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -432,7 +420,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2647504" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -702,8 +689,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3536">
-          <caret line="208" lean-forward="true" selection-start-line="208" selection-end-line="208" />
+        <state relative-caret-position="3876">
+          <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
         </state>
       </provider>
     </entry>
