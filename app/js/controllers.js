@@ -182,7 +182,13 @@ angular.module('SHAREBOOKSApp')
 				dataFactory.bookrequest(req).success(function(data)
 				{
 					
-					
+					var modalOptions2 = {
+                        		mType:'notify',
+                        		actionButtonText: 'Ok',
+                        		bodyText: "La solicitud fue enviada con exito"
+                    		};
+                   		
+				 modalService.showModal({}, modalOptions2)	
 					
 
 
@@ -292,20 +298,103 @@ angular.module('SHAREBOOKSApp')
 
 
 
+
+
+
+
+
+
+
+
+
+
 angular.module('SHAREBOOKSApp')
     .controller('NotificationsCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
     {
                 $rootScope.status={"hayerror":false,"success":false,"msg":null};
+		$scope.request={};
+		
+		$scope.showDetail=function(req)
+		{
+			$scope.request=req;
+			if(req.book.owner==$rootScope.usuario.id && req.state==0)$('#acceptRequestModal').modal('toggle');
+			else
+			if(req.book.owner==$rootScope.usuario.id && req.state==1)$('#deliverRequestModal').modal('toggle');
+			else
+			$('#showRequestModal').modal('toggle');
+		}
 
-                /*$scope.notifications=
-                [
-                        {type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
-                        {type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'},
-			{type:'alert-success',title:'Solicitud',body:'Tu solicitud se realizo correctamente',link:''}
-                ];*/
+
+		$scope.aceptar=function()
+		{
+			dataFactory.bookrequestConfirm({'id':$scope.request.id}).success(function()
+			{
+				$('#acceptRequestModal').modal('toggle');
+
+				var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "La solicitud fue confirmada"}
+
+				modalService.showModal({}, modalOptions2)				
+	
+			});
+
+		}
+		
+		$scope.rechazar=function()
+		{
+			
+			dataFactory.bookrequestReject({'id':$scope.request.id}).success(function()
+                        {
+				$('#acceptRequestModal').modal('toggle');		
+				
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "La solicitud fue rechazada"}
+
+				modalService.showModal({}, modalOptions2)
+
+                        });
+						
+		}
+
+		$scope.entregar=function()
+                {
+
+                        dataFactory.bookrequestDeliver({'id':$scope.request.id}).success(function()
+                        {
+                                $('#deliverRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la confirmacion de entrega"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
 
 }]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -1,7 +1,11 @@
 <div class="row">
         <div ng-repeat="notif in notifications">
 		<div class="alert {{notif.type}}">
-  			<strong>{{notif.title}}</strong> {{notif.body}} <a class='alert-link' href='{{notif.link}}'>Puedes verlo aqui!!</a>
+  			<strong>{{notif.title}}</strong> {{notif.body}} <a class='alert-link' ng-click='showDetail(notif.request)'>Puedes verlo aqui!!</a>
 		</div>        
 	</div>
 </div>
+
+<div ng-include="'partials/show-request.html'"></div>
+<div ng-include="'partials/accept-request.html'"></div>
+<div ng-include="'partials/deliver-request.html'"></div>

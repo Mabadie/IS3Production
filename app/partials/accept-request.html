@@ -1,0 +1,80 @@
+<style>
+.img-wrapper {
+  position: relative;
+}
+
+.img-overlay {
+   position: absolute;
+   top: 5px;
+   bottom:0;
+   left: 0;
+   right: 0;
+   text-align: center;
+}
+
+.img-overlay:before {
+   content: ' ';
+   display: block;
+}
+
+</style>
+
+<div class="modal" id="acceptRequestModal">
+    <div class="modal-dialog" style='width:750px'>
+        <div class="modal-content">
+
+                <div class="modal-header dialog-header-notify ">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Aceptar/Rechazar solicitud</h4>
+                </div>
+				
+		<div class="modal-body">
+				
+                <div class="alert alert-warning" ng-if="status.hayerror" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;margin-bottom: 15px;" >
+                     <button type="button" class="close" ng-click="status.hayerror=false">&times;</button>
+                     <span class="glyphicon glyphicon-warning-sign"></span>&nbsp; {{status.msg}}
+                </div>
+				<div class="row">
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+					<div class="img-wrapper">
+						<img src="{{request.book.image}}" width='200' height='300' class="img-responsive center-block book"/>
+					<div class="img-overlay">
+  			        </div>
+				   </div>
+
+				</div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+				             <strong>Titulo</strong>: {{request.book.title}} 
+				</div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+				             <strong>Autor</strong>:{{request.book.author}}
+				</div>
+
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+					<strong>A&ntilde;o</strong>:{{request.book.year}}
+				</div>
+				
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+                                        <strong>Fecha de solicitud</strong>:{{formatDate(request.timestamp)}}
+                                </div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+                                        <strong>Estado de solicitud</strong>:{{formatState(request.state)}}
+                                </div>
+			  <br/>
+			  </div>
+
+		<div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="cerrarModal('#acceptRequestModal');">Cancelar</button>
+                    <button type="submit" class="btn" ng-click='aceptar()'>Aceptar</button>
+		    <button type="submit" class="btn" ng-click='rechazar()'>Rechazar</button>
+		</div>
+
+        </div>
+    </div>
+</div>
+
