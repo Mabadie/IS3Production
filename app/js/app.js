@@ -63,7 +63,7 @@ var interceptor=function($q, $rootScope, $log) {
                     break;
                 default :
 		    console.log(rejection);	
-		    if(rejection.data.detail.indexOf('token')!=-1)break;	
+		    if(rejection.data.detail && rejection.data.detail.indexOf('token')!=-1)break;	
                     $log.warn(rejection.status+':'+rejection.statusText);
                     $rootScope.status.msg = rejection.data;
                     $rootScope.status.hayerror =true;
