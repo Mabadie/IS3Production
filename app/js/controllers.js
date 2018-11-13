@@ -65,6 +65,7 @@ angular.module('SHAREBOOKSApp')
 		$rootScope.interval=setInterval(function(){
 			dataFactory.mynotifications().success(function(data)
 			{
+				//if($rootScope.notifications.length == data.length) return;
 				var count=0;
 				for(var n in $rootScope.notifications){ 
 					if(!$rootScope.notifications[n].done) count++;
@@ -322,6 +323,16 @@ angular.module('SHAREBOOKSApp')
 			else
 			if(req.book.owner==$rootScope.usuario.id && req.state==1)$('#deliverRequestModal').modal('toggle');
 			else
+			if(req.user==$rootScope.usuario.id && req.state==2)$('#deliveredRequestModal').modal('toggle');
+			else
+			if(req.user==$rootScope.usuario.id && req.state==3)$('#returnRequestModal').modal('toggle');
+			else
+			if(req.book.owner==$rootScope.usuario.id && req.state==4)$('#confirmreturnedRequestModal').modal('toggle');
+			else
+			if(req.user==$rootScope.usuario.id && req.state==5)alert("calificar libro");
+			else
+			if(req.book.owner==$rootScope.usuario.id && req.state==5)alert("calificar lector");
+			else
 			$('#showRequestModal').modal('toggle');
 		}
 
@@ -379,9 +390,69 @@ angular.module('SHAREBOOKSApp')
 
                 }
 
+		
+		 $scope.recibir=function()
+                {
+
+                        dataFactory.bookrequestConfirmDelivered({'id':$scope.request.id}).success(function()
+                        {
+                                $('#deliveredRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la confirmacion de recepcion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+		
+		$scope.devolver=function()
+                {
+
+                        dataFactory.bookrequestReturn({'id':$scope.request.id}).success(function()
+                        {
+                                $('#returnRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la solicitud de devolucion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+
+
+		$scope.confirmarDevolucion=function()
+                {
+
+                        dataFactory.bookrequestConfirmReturned({'id':$scope.request.id}).success(function()
+                        {
+                                $('#confirmreturnedRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se confirmo la devolucion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+
+
+
 
 }]);
-
 
 
 

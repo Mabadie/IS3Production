@@ -59,7 +59,7 @@ angular.module('SHAREBOOKSApp')
 
 	//devolucion de libro
         dataFactory.bookrequestReturn = function (req) {
-            return $http.post(urlBase + '/book-return/',req);
+            return $http.post(urlBase + '/book-request-return/',req);
         };
 
 	//confirmacion de devolucion de libro

@@ -52,7 +52,6 @@ class BookRequestConfirm(APIView):
 					Notification.send(request.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Has aceptado la solicitud del libro "'+book.title+'" debes confirmar la entrega:', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:			
-			
 				print()
 				
 		return Response("", status=status.HTTP_400_BAD_REQUEST)
@@ -71,7 +70,7 @@ class BookRequestDeliver(APIView):
 				book=Book.objects.get(id=bq.book_id)
 				if book.owned_by(request.user) and bq.state==1:
 					bq.deliver()
-					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+bq.id+'):', 'Han confirmado la entrega  del libro "'+book.title+'"; debes confirmar recepcion:', '#')
+					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la entrega  del libro "'+book.title+'"; debes confirmar recepcion:', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 
@@ -92,9 +91,11 @@ class BookRequestConfirmDelivered(APIView):
 		if serializer.is_valid():
 			try:
 				bq = BookRequest.objects.get(id= request.data['id'])
+				book=Book.objects.get(id=bq.book_id)
 				if bq.user==request.user and bq.state==2:
 					bq.confirm_delivered()
-					Notification.send(bq.book.owner, bq, 'alert-success', 'Solicitud(#'+bq.id+'):', 'Han confirmado la recepcion  del libro "'+book.title+'"', '#')
+					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la recepcion  del libro "'+book.title+'"', '#')
+					Notification.send(bq.user, bq, 'alert-success', 'Solicitud(#'+str(bq.id)+'):', 'Disfruta de la lectura!! recurda realizar la devolucion cuando finalices', '#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 
@@ -109,21 +110,23 @@ class BookRequestConfirmDelivered(APIView):
 
 class BookRequestReturn(APIView):
 
-        def post(self,request,format=None):
+	def post(self,request,format=None):
 
-                serializer = BookRequestPutSerializer(data=request.data)
+		serializer = BookRequestPutSerializer(data=request.data)
 
-                if serializer.is_valid():
-                        try:
-                                bq = BookRequest.objects.get(id= request.data['id'])
-                                if bq.user==request.user and bq.state==3:
-                                        bq.give_back();
-                                        return Response(status=status.HTTP_200_OK)
-                        except:
+		if serializer.is_valid():
+			try:
+				bq = BookRequest.objects.get(id= request.data['id'])
+				book=Book.objects.get(id=bq.book_id)
+				if bq.user==request.user and bq.state==3:
+					bq.give_back();
+					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la devolucion del libro "'+book.title+'"; debes confirmar la recepcion', '#')
+					return Response(status=status.HTTP_200_OK)
+			except:
 
-                                print()
+				print()
 
-                return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("", status=status.HTTP_400_BAD_REQUEST)
 
 
 
@@ -140,13 +143,15 @@ class BookRequestConfirmReturned(APIView):
 				bq = BookRequest.objects.get(id= request.data['id'])
 				book=Book.objects.get(id=bq.book_id)
 				if book.owned_by(request.user) and bq.state==4:
-					bq.confirm_return();
+					bq.confirm_returned();
+					Notification.send(bq.user, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Han confirmado la recepcion de la devolucion  del libro "'+book.title+'"; recuerda calificar tu experiencia', '#')
+					Notification.send(book.owner, bq, 'alert-info', 'Solicitud(#'+str(bq.id)+'):', 'Recuerda calificar tu experiencia','#')
 					return Response(status=status.HTTP_200_OK)
 			except:
 		
 				print()
 
-			return Response("", status=status.HTTP_400_BAD_REQUEST)
+		return Response("", status=status.HTTP_400_BAD_REQUEST)
 
 
 
