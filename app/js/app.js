@@ -17,7 +17,8 @@ var interceptor=function($q, $rootScope, $log) {
     return {
         'request': function(config){
             $rootScope.ajaxCount++;
-            $('#loading-indicator').show();
+            if(config.url.indexOf('notifications')==-1)
+	    $('#loading-indicator').show();
             return config;
         },
         'response': function(result){

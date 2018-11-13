@@ -37,15 +37,50 @@ angular.module('SHAREBOOKSApp')
             return $http.get(urlBase + '/my-books/');
         };
 
-
 	//solicitud de libro
 	dataFactory.bookrequest = function (req) {
             return $http.post(urlBase + '/book-request/',req);
         };
 
+        //confirmar solicitud de libro
+        dataFactory.bookrequestConfirm = function (req) {
+            return $http.post(urlBase + '/book-request-confirm/',req);
+        };
+
+        //entrega  de libro
+        dataFactory.bookrequestDeliver = function (req) {
+            return $http.post(urlBase + '/book-request-deliver/',req);
+        };
+
+        //confirmacion de entrega de libro
+        dataFactory.bookrequestConfirmDelivered = function (req) {
+            return $http.post(urlBase + '/book-request-confirm-delivered/',req);
+        };
+
+	//devolucion de libro
+        dataFactory.bookrequestReturn = function (req) {
+            return $http.post(urlBase + '/book-return/',req);
+        };
+
+	//confirmacion de devolucion de libro
+        dataFactory.bookrequestConfirmReturned = function (req) {
+            return $http.post(urlBase + '/book-request-confirm-returned/',req);
+        };
+
+	//rechazo de solicitud de libro
+        dataFactory.bookrequestReject = function (req) {
+            return $http.post(urlBase + '/book-request-reject/',req);
+        };
+
+	//lista de solicitudes realizadas y recibidas
 	dataFactory.myrequests= function(req){
 		return $http.get(urlBase + '/book-request/',req);
 	};
+
+	//notificaciones
+	dataFactory.mynotifications= function(){
+                return $http.get(urlBase + '/notifications/');
+        };
 
         return dataFactory;
 

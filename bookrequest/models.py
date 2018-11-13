@@ -16,9 +16,11 @@ class BookRequest(models.Model):
 	REQUEST_STATES=	(
 		(0,'Enviada'),
 		(1,'Aceptada'),
-		(2,'Entregado'),
-		(3,'Devuelto/Finalizada'),
-		(4,'Rechazada/Finalizada'),
+		(2,'Entregado-SinConfirmacion'),
+		(3,'Entregado-Confirmado'),
+		(4,'Devuelto-SinConfirmacion'),
+		(5,'Devuelto-Confirmado'),
+		(6,'Rechazada/Finalizada'),
 	)
 
 	user= models.ForeignKey(User,on_delete=models.CASCADE)
@@ -28,15 +30,44 @@ class BookRequest(models.Model):
 	
 
 	def accept(self):
+		#owner=yo && state=0
 		book=Book.objects.get(id=self.book.id)
 		book.share()
 		self.state=1
-		self.save()	
+		self.save()
+		#genera notificacion de aceptacion
+
+	def deliver(self):
+		#owner=yo && state=1
+		self.state=2
+		self.save()
+		#genera notificacion entrega
+	
+	def confirm_delivered(self):
+		#user=yo && state=2
+		self.state=3
+		self.save()
+		#genera notificacion confirmacion entrega
+		
+	def give_back(self):
+		#user=yo && state=3
+		self.state=4
+		self.save()
+		#genera notificacion devolucion		
+
+	def confirm_returned(self):
+		#owner=yo && state=4
+		self.state=5
+		self.save()
+		#genera notificacion confirmacion devolucion
+
+	def reject(self):
+		#owner=yo && state = 0
+		self.state=6
+		self.save()
+		#genera notificacion de rechazo
 
 	class Meta:
 		unique_together = (("user", "book"),)
 		ordering=('timestamp',)
 
-
-	
-	

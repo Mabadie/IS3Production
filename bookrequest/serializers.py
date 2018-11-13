@@ -8,7 +8,7 @@ class BookRequestSerializer(serializers.ModelSerializer):
 	
 	class Meta:
 		model = BookRequest
-		fields = ('user','book','state','timestamp')
+		fields = ('id','user','book','state','timestamp')
 
 """
 class BookRequestGetSerializer(serializers.ModelSerializer):

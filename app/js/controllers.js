@@ -1,13 +1,17 @@
 'use strict';
 angular.module('SHAREBOOKSApp')
-    .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window',
-        function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window) {
+    .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window','$http',
+        function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window, $http) {
 			
 	    $rootScope.usuario={"logged_in":false,id:null};
             $rootScope.status={"hayerror":false,"success":false,"msg":null};
 	    $rootScope.esLogout=false;
             $scope.status.hayerrorLogin=false;
             $rootScope.ajaxCount=0;
+	    $rootScope.notifications=[];
+	    $rootScope.interval=null;	 		   
+	    $rootScope.notifCount="";
+	
             $('nav').addClass('shrink');
 	    $(".nav a").on("click", function(){
             	$(".nav").find(".active").removeClass("active");
@@ -25,6 +29,8 @@ angular.module('SHAREBOOKSApp')
                 dataFactory.logout($rootScope.usuario.nroCliente)
                     .success(function(data,status){
                             $rootScope.usuario.logged_in=false;
+			    $rootScope.stopNotifications();	
+			    $http.defaults.headers.common['Authorization']="";	
                             $location.path("/login");
                  });
             }
@@ -45,12 +51,35 @@ angular.module('SHAREBOOKSApp')
                 {
                         case(0): return "Solicitud Enviada";
                         case(1): return "Solicitud Aceptada";
-                        case(2): return "Entregado";
-                        case(3): return "Devuelto";
-                        case(4): return "Solicitud Rechazada";
+                        case(2): return "Entregado-No confirmado";
+			case(3): return "Entregado";
+                        case(4): return "Devuelto-No confirmado";
+			case(5): return "Devuelto";
+                        case(6): return "Solicitud Rechazada";
                 }
         };
-	
+
+	$rootScope.startNotifications=function()
+	{
+		$rootScope.interval=setInterval(function(){
+			dataFactory.mynotifications().success(function(data)
+			{
+				var count=0;
+				for(var n in $rootScope.notifications){ 
+					if(!$rootScope.notifications[n].done) count++;
+				}
+
+				$rootScope.notifCount=(count==0)?"":count;
+				$rootScope.notifications=data;
+			});
+
+		},3000);	
+	}
+
+	$rootScope.stopNotifications=function()
+        {
+                clearInterval($rootScope.interval)
+        }
 
 
     }]);
@@ -78,6 +107,7 @@ angular.module('SHAREBOOKSApp')
                         	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
 				$rootScope.usuario.id=data.id;
+				$rootScope.startNotifications();
                  		$location.url("/books");
                     	}
                  });
@@ -141,7 +171,7 @@ angular.module('SHAREBOOKSApp')
 				dataFactory.bookrequest(req).success(function(data)
 				{
 					
-					//simular notificaciones
+					
 					
 
 
@@ -225,16 +255,14 @@ angular.module('SHAREBOOKSApp')
     {
                 $rootScope.status={"hayerror":false,"success":false,"msg":null};
 
-                $scope.notifications=
+                /*$scope.notifications=
                 [
                         {type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
                         {type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'},
 			{type:'alert-success',title:'Solicitud',body:'Tu solicitud se realizo correctamente',link:''}
-                ];
+                ];*/
 
 }]);
-
-
 
 
 

@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'books.apps.BookConfig',
     'bookrequest.apps.BookrequestConfig',
-    # 'django.db.backends.mysql'
-    # 'push_notifications',
+    'notifications.apps.NotificationsConfig',	
+     #'django.db.backends.mysql',
+     #'push_notifications',
+     #'fcm',
 ]
 
 MIDDLEWARE = [
@@ -165,3 +167,4 @@ STATIC_ROOT = BASE_DIR+'/app/'
 ALLOWED_HOSTS = ['*']
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
+
