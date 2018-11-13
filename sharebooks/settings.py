@@ -101,8 +101,8 @@ DATABASES = {
         'NAME': 'SHAREBOOKS',
         'USER': 'admin',
         'PASSWORD': 'is32018',
-        #'HOST': '190.64.68.74',   # Or an IP Address that your DB is hosted on
-        'HOST': 'localhost',
+        'HOST': '190.64.68.74',   # Or an IP Address that your DB is hosted on
+        #'HOST': 'localhost',
 	'PORT': '3306',
     }
 }
@@ -162,9 +162,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
-STATICFILES_DIRS= [BASE_DIR+'/app/',]
+#STATICFILES_DIRS= [BASE_DIR+'/app/',]
 STATIC_URL = '/app/'
-#STATIC_ROOT = BASE_DIR+'/app/'
+STATIC_ROOT = BASE_DIR+'/app/'
 ALLOWED_HOSTS = ['*']
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
