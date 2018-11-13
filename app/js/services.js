@@ -59,6 +59,13 @@ angular.module('SHAREBOOKSApp')
 	    return $http.post(urlBase + '/my-books/insert/',request);
     }
 
+    dataFactory.editBook = function(request){
+	    return $http.post(urlBase + '/my-books/update/', request);
+    }
+
+     dataFactory.deleteBook = function(request){
+	    return $http.post(urlBase + '/my-books/delete/', request);
+    }
         return dataFactory;
 
     }]);

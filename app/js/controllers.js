@@ -200,8 +200,14 @@ angular.module('SHAREBOOKSApp')
               				};
 
                 	         	modalService.showModal({}, modalOptions).then(function (result){
-		
-		        	        });				
+                	         		var request = {'id': book.id};
+                	         		console.log(request);
+									dataFactory.deleteBook(request);
+									dataFactory.mybooks().success(function(data)
+									{
+										$scope.books=data;
+									});
+		        	        });
 				}				
 
 				$scope.edit=function(book)
@@ -234,7 +240,15 @@ angular.module('SHAREBOOKSApp')
 
 				$scope.editBook=function()
 				{
-					alert('submit changes')				
+					var editBookRequest = {
+						'id':$scope.book.id,
+						'title':$scope.book.title,
+						'author':$scope.book.author,
+						'year':$scope.book.year,
+						'image':$scope.book.image
+					}
+					dataFactory.editBook(editBookRequest);
+					$('#editBookModal').modal('hide');
 				}
 
 				$scope.imageChange=function()
