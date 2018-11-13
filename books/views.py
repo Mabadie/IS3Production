@@ -91,12 +91,12 @@ def insert(request):
 @permission_classes((AllowAny,))
 def update(request):
     id = request.data.get("id")
-    # owner = request.data.get("owner") #Supongo que no se actualiza, al igual que 'aviable' pero por las dudas lo dejé
+    #owner = request.data.get("owner") #Supongo que no se actualiza, al igual que 'aviable' pero por las dudas lo dejé
     title = request.data.get("title")
     author = request.data.get("author")
     year = request.data.get("year")
     image = request.data.get("image")
-    aviable = request.data.get("aviable")
+    #aviable = request.data.get("aviable")
 
     if Book.objects.filter(id=id).exists():
         book = Book.objects.get(id=id)
@@ -105,7 +105,7 @@ def update(request):
         book.author = author
         book.year = year
         book.image = image
-        book.aviable = aviable
+     #   book.aviable = aviable
         book.save()
         return Response(BookSerializer(book).data, status=status.HTTP_200_OK)
     else:
@@ -113,9 +113,10 @@ def update(request):
 
 
 @csrf_exempt
-@api_view(["DELETE"])
+@api_view(["POST"])
 @permission_classes((AllowAny,))
 def delete(request):
+    print (request.data.get("id"))
     id = request.data.get("id")
 
     if Book.objects.filter(id=id).exists():

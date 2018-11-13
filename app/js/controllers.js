@@ -31,13 +31,14 @@ angular.module('SHAREBOOKSApp')
                             $rootScope.usuario.logged_in=false;
 			    $rootScope.stopNotifications();	
 			    $http.defaults.headers.common['Authorization']="";	
+                            $rootScope.logedUser = null;
                             $location.path("/login");
                  });
             }
 
 	$rootScope.formatDate = function (dateString) {
-	    
-            if(!dateString) return;	
+
+            if(!dateString) return;
             var year        = dateString.substring(0,4);
             var month       = dateString.substring(5,7);
             var day         = dateString.substring(8,10);
@@ -81,7 +82,6 @@ angular.module('SHAREBOOKSApp')
                 clearInterval($rootScope.interval)
         }
 
-
     }]);
 
 
@@ -91,7 +91,7 @@ angular.module('SHAREBOOKSApp')
             $rootScope.status = {"hayerror": false, "success": false, "msg": null};
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
-	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}	
+	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}
 
 	    $scope.login=function()
 	    {
@@ -108,7 +108,14 @@ angular.module('SHAREBOOKSApp')
 		                $rootScope.usuario.logged_in=true;
 				$rootScope.usuario.id=data.id;
 				$rootScope.startNotifications();
+		                $rootScope.usuario.id=data.id;
                  		$location.url("/books");
+                 		var request = {'userId':$rootScope.usuario.id};
+						dataFactory.getUser(request).success(function(data)
+						{
+							$rootScope.logedUser=data;
+						});
+
                     	}
                  });
 
@@ -129,10 +136,14 @@ angular.module('SHAREBOOKSApp')
 			{
 				$http.defaults.headers.common['Authorization'] = "Token "+data.token;
                                 $rootScope.usuario.logged_in=true;
-				$rootScope.usuario.id=data.id;
                                 $location.url("/books");
                     	}
                  });
+            	var request = {'userId':$rootScope.usuario.id};
+				dataFactory.getUser(request).success(function(data)
+				{
+					$rootScope.logedUser=data;
+				});
 
 
              }
@@ -178,7 +189,8 @@ angular.module('SHAREBOOKSApp')
 				});	
 
 			 });
-	}
+	   }
+
 	  
        $scope.search=function()
        {
@@ -218,8 +230,14 @@ angular.module('SHAREBOOKSApp')
               				};
 
                 	         	modalService.showModal({}, modalOptions).then(function (result){
-		
-		        	        });				
+                	         		var request = {'id': book.id};
+                	         		console.log(request);
+									dataFactory.deleteBook(request);
+									dataFactory.mybooks().success(function(data)
+									{
+										$scope.books=data;
+									});
+		        	        });
 				}				
 
 				$scope.edit=function(book)
@@ -230,12 +248,37 @@ angular.module('SHAREBOOKSApp')
 
 				$scope.new=function()
 				{
-                                        $('#newBookModal').modal('toggle');
+					$('#newBookModal').modal('toggle');
+				}
+
+				$scope.newBook=function()
+				{
+					var reqCreateBook = {
+						"owner":$rootScope.logedUser.username,
+						"title":$scope.book.title,
+						"year":$scope.book.year,
+						"author":$scope.book.author,
+						"image":$scope.book.image
+					};
+					dataFactory.createBook(reqCreateBook);
+					dataFactory.mybooks().success(function(data)
+                	{
+						$scope.books=data;
+	                });
+					$('#newBookModal').modal('hide');
 				}
 
 				$scope.editBook=function()
 				{
-					alert('submit changes')				
+					var editBookRequest = {
+						'id':$scope.book.id,
+						'title':$scope.book.title,
+						'author':$scope.book.author,
+						'year':$scope.book.year,
+						'image':$scope.book.image
+					}
+					dataFactory.editBook(editBookRequest);
+					$('#editBookModal').modal('hide');
 				}
 
 				$scope.imageChange=function()
@@ -294,4 +337,81 @@ angular.module('SHAREBOOKSApp')
 			$scope.request=req;
                         $('#showRequestModal').modal('toggle');			
 		}
+}]);
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('AccountCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+    	$scope.profileUsr = {'username': null,'actualPassword':null, 'password': null,'rpassword': null, 'email':null}
+    	$scope.errorMsg=null;
+    	$scope.showPasswordMessage = false;
+    	var request = {'userId':$rootScope.usuario.id};
+		dataFactory.getUser(request).success(function(data)
+			{
+				$scope.errorMsg=null;
+				$rootScope.logedUser=data;
+			}).error($scope.errorMsg="Ups, ocurrio un error al obtener los datos");
+
+
+		$scope.updateNameModal=function()
+		{
+			$('#modifyNameModal').modal('toggle');
+		}
+
+		$scope.updateName=function()
+		{
+			var reqUpdateName = {'userId':$rootScope.usuario.id, 'type':'name', 'username':$scope.profileUsr.username};
+
+			dataFactory.updateUser(reqUpdateName).success(function(response) {
+                $rootScope.logedUser = response
+				$scope.errorMsg = null;;
+            });
+
+			$('#modifyNameModal').modal('hide');
+		}
+
+		$scope.updateEmailModal=function()
+		{
+			$('#modifyEmailModal').modal('toggle');
+		}
+
+		$scope.updateEmail=function()
+		{
+			var reqUpdateEmail = {'userId':$rootScope.usuario.id, 'type':'email', 'email':$scope.profileUsr.email};
+			dataFactory.updateUser(reqUpdateEmail).success(function(response) {
+                $rootScope.logedUser = response;
+                $scope.errorMsg = null;
+
+            });
+			$('#modifyEmailModal').modal('hide');
+		}
+
+		$scope.updatePasswordModal=function()
+		{
+			$('#modifyPasswordModal').modal('toggle');
+		}
+
+		$scope.updatePassword=function()
+		{
+			var reqUpdatePassword = {'userId':$rootScope.usuario.id, 'type':'password',
+				'actualPassword': $scope.profileUsr.actualPassword,
+				'password':$scope.profileUsr.password,
+				'rpassword':$scope.profileUsr.rpassword };
+			dataFactory.updateUser(reqUpdatePassword).success(function (response) {
+				$scope.errorMsg = null;
+				$scope.showPasswordMessage = true;
+            }).error(function(error){
+				console.log(error);
+				if(error.status=400){
+					$scope.errorMsg = error.message;
+				}
+			});
+			$('#modifyPasswordModal').modal('hide');
+
+		}
+
+
+
 }]);

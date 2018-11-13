@@ -24,8 +24,6 @@ SECRET_KEY = 'nvt%2tz%q%25ve2w!teup7)j95jzwrbvp&dt)2bvk#t=-h0^1*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,6 +42,9 @@ INSTALLED_APPS = [
      #'django.db.backends.mysql',
      #'push_notifications',
      #'fcm',
+    'Users.apps.UsersConfig',
+    # 'django.db.backends.mysql'
+    # 'push_notifications',
 ]
 
 MIDDLEWARE = [
