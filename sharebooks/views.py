@@ -65,10 +65,6 @@ def signup(request):
 	if rpassword != password:
         	return Response("Las contraseñas no coinciden", status=status.HTTP_400_BAD_REQUEST)
 
-	e=User.objects.filter(email=email);
-	if not e is None:
-		return Response("Ya existe una cuenta asociada a este email", status=status.HTTP_400_BAD_REQUEST)	
-    	
 	user = User.objects.create_user(username, email, password)
 	user.save()
 
