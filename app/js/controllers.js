@@ -160,17 +160,20 @@ angular.module('SHAREBOOKSApp')
 
 			if (status == 200)
 			{
-				$http.defaults.headers.common['Authorization'] = "Token "+data.token;
-                                $rootScope.usuario.logged_in=true;
-                                $location.url("/books");
+					$http.defaults.headers.common['Authorization'] = "Token "+data.token;
+		                $rootScope.usuario.logged_in=true;
+				$rootScope.usuario.id=data.id;
+				$rootScope.startNotifications();
+		                $rootScope.usuario.id=data.id;
+                 		$location.url("/books");
+                 		var request = {'userId':$rootScope.usuario.id};
+						dataFactory.getUser(request).success(function(data)
+						{
+							$rootScope.logedUser=data;
+						});
+
                     	}
                  });
-            	var request = {'userId':$rootScope.usuario.id};
-				dataFactory.getUser(request).success(function(data)
-				{
-					$rootScope.logedUser=data;
-				});
-
 
              }
 
