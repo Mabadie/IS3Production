@@ -99,13 +99,13 @@ angular.module('SHAREBOOKSApp')
 
 	$rootScope.startNotifications=function()
 	{
-		getmynotifications();
-		$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
+		//getmynotifications();
+		//$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
 	}
 
 	$rootScope.stopNotifications=function()
         {
-                clearInterval($rootScope.interval)
+                //clearInterval($rootScope.interval)
         }
 
     }]);
@@ -383,19 +383,19 @@ angular.module('SHAREBOOKSApp')
                                 actionButtonText: 'Ok',
                                 bodyText: "La solicitud fue confirmada"}
 
-				modalService.showModal({}, modalOptions2)				
-	
+				modalService.showModal({}, modalOptions2)
+
 			});
 
 		}
-		
+
 		$scope.rechazar=function()
 		{
-			
+
 			dataFactory.bookrequestReject({'id':$scope.request.id}).success(function()
                         {
-				$('#acceptRequestModal').modal('toggle');		
-				
+				$('#acceptRequestModal').modal('toggle');
+
                                 var modalOptions2 = {
                                 mType:'notify',
                                 actionButtonText: 'Ok',
@@ -404,7 +404,7 @@ angular.module('SHAREBOOKSApp')
 				modalService.showModal({}, modalOptions2)
 
                         });
-						
+
 		}
 
 		$scope.entregar=function()
@@ -425,7 +425,7 @@ angular.module('SHAREBOOKSApp')
 
                 }
 
-		
+
 		 $scope.recibir=function()
                 {
 
@@ -483,11 +483,11 @@ angular.module('SHAREBOOKSApp')
 
                 }
 
-		
+
 		$scope.calificar=function()
 		{
 			if($scope.calification==0){ alert("Seleccione una calificacion"); return; }
-			
+
 			dataFactory.bookrequestCalification({'id':$scope.request.id,'calif_owner':$scope.calification,'calif_reader':$scope.calification}).success(function()
                         {
                                 $('#calificationRequestModal').modal('toggle');
