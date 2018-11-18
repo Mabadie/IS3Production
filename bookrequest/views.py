@@ -8,7 +8,6 @@ from rest_framework import status
 from bookrequest.models import BookRequest
 from books.models import Book
 from rest_framework.response import Response
-from django.http import Http404
 from django.db.models import Q
 from notifications.models import Notification
 

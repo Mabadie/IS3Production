@@ -67,8 +67,10 @@ angular.module('SHAREBOOKSApp')
 
 	var getmynotifications=function()
 	{
+		console.log("Se van a pedir notificaciones!");
 		dataFactory.mynotifications().success(function(data)
                         {
+                        	console.log("Succes! Se obtuvieron notificaciones!");
                         	$rootScope.timeoutNotifications=3000;
                                 var count=0;
                                 for(var n in data){
@@ -88,24 +90,25 @@ angular.module('SHAREBOOKSApp')
 	                                        $rootScope.notifications=data;
 					}
 				}
-				
+
 
                         }).error(function () {
                         		console.log("Notifications error");
 								$rootScope.timeoutNotifications = 15000;
 							});
+		console.log("Fin notificaciones");
 	}
 
 
 	$rootScope.startNotifications=function()
 	{
-		//getmynotifications();
-		//$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
+		getmynotifications();
+		$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
 	}
 
 	$rootScope.stopNotifications=function()
         {
-                //clearInterval($rootScope.interval)
+                clearInterval($rootScope.interval)
         }
 
     }]);

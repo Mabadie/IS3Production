@@ -1,6 +1,5 @@
 from django.db import models
 from bookrequest.models import BookRequest
-import datetime
 from django.contrib.auth.models import User
 
 # Create your models here.

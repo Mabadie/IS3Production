@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.conf import settings
 from notifications.models import Notification
 from bookrequest.serializers import BookRequestSerializer
 
