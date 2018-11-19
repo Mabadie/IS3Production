@@ -21,9 +21,14 @@ class Book(models.Model):
 	def owned_by(self,user):
 		return self.owner.id==user.id
 
-	def share(self):
+	def hide(self):
 		self.aviable=False
 		self.save()
+	
+	def show(self):
+		self.aviable=True
+		self.save()
+	
 
 	class Meta:
 		ordering = ('title',)

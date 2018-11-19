@@ -1,39 +1,118 @@
 'use strict';
 angular.module('SHAREBOOKSApp')
-    .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window',
-        function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window) {
+    .controller('RootCtrl', ['$scope','$rootScope','$routeParams', '$location','dataFactory','$window','$http',
+        function ($scope, $rootScope, $routeParams,  $location, dataFactory, $window, $http) {
 			
-	    $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
+	    $rootScope.usuario={"logged_in":false,id:null};
             $rootScope.status={"hayerror":false,"success":false,"msg":null};
-			$rootScope.esLogout=false;
+	    $rootScope.esLogout=false;
             $scope.status.hayerrorLogin=false;
             $rootScope.ajaxCount=0;
+	    $rootScope.notifications=[];
+	    $rootScope.interval=null;	 		   
+	    $rootScope.notifCount="";
+	    $rootScope.notiflag=false;
+	    $rootScope.timeoutNotifications=3000;
+	    $scope.notificationsAsked=false;
+	
             $('nav').addClass('shrink');
 	    $(".nav a").on("click", function(){
             	$(".nav").find(".active").removeClass("active");
    		$(this).parent().addClass("active");
 	    });		
 
-			$location.path("/login");
+	    $location.path("/login");
 
-           	$rootScope.cerrarModal=function(modDiag){
+            $rootScope.cerrarModal=function(modDiag){
                 $(modDiag).modal('toggle');
             };
 
-            $scope.logout=function(){
-				$rootScope.esLogout=true;
+            $rootScope.logout=function(){
+		$rootScope.esLogout=true;
                 dataFactory.logout($rootScope.usuario.nroCliente)
                     .success(function(data,status){
-                        if ($rootScope.TipoSesion==null){
-                            $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
+                            $rootScope.usuario.logged_in=false;
+			    $rootScope.stopNotifications();	
+			    $http.defaults.headers.common['Authorization']="";	
+                            $rootScope.logedUser = null;
                             $location.path("/login");
-                        }else{
-                            $window.location.href= $rootScope.usuario.cliente.URLVueltaBanco;
-                            $rootScope.usuario={"logged_in":false,"nombre":null, "nroCliente":null,"cliente":null};
-                        }
-                    });
+                 });
             }
 
+	$rootScope.formatDate = function (dateString) {
+
+            if(!dateString) return;
+            var year        = dateString.substring(0,4);
+            var month       = dateString.substring(5,7);
+            var day         = dateString.substring(8,10);
+            return day + '/' + month +'/'+ year;
+
+        };
+
+        $rootScope.formatState = function (state) {
+
+                switch(state)
+                {
+                        case(0): return "Solicitud Enviada";
+                        case(1): return "Solicitud Aceptada";
+                        case(2): return "Entregado-No confirmado";
+			case(3): return "Entregado";
+                        case(4): return "Devuelto-No confirmado";
+			case(5): return "Devuelto-Pendiente calificacion";
+                        case(6): return "Solicitud Rechazada";
+			case(7): return "Devuelto-Pendiente calificacion";
+			case(8): return "Devuelto-Pendiente calificacion";
+			case(9): return "Devuelto";
+                }
+        };
+
+	var getmynotifications=function()
+	{
+		console.log("Se van a pedir notificaciones!");
+		console.time('NotificationsRequest')
+
+		if (!$scope.notificationsAsked) {
+			$scope.notificationsAsked = true;
+            dataFactory.mynotifications().success(function (data) {
+                $scope.notificationsAsked = false;
+                var count = 0;
+                for (var n in data) {
+                    if (!data[n].done) count++;
+                }
+
+                if (!$rootScope.notiflag) {
+                    $rootScope.notifCount = (count == 0) ? "" : count;
+                    $rootScope.notifications = data;
+                    $rootScope.notiflag = true;
+                } else {
+                    if (count) {
+                        $rootScope.notifCount = (count == 0) ? "" : count;
+                        $rootScope.notifications = data;
+                    }
+                }
+
+
+            }).error(function () {
+            	$scope.notificationsAsked = false;
+                console.log("Notifications error");
+            });
+        }
+		console.log("Fin notificaciones");
+		console.timeEnd('NotificationsRequest');
+
+	}
+
+
+	$rootScope.startNotifications=function()
+	{
+		getmynotifications();
+		$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
+	}
+
+	$rootScope.stopNotifications=function()
+        {
+                clearInterval($rootScope.interval)
+        }
 
     }]);
 
@@ -44,34 +123,69 @@ angular.module('SHAREBOOKSApp')
             $rootScope.status = {"hayerror": false, "success": false, "msg": null};
             $rootScope.esLogout=false;
             $scope.loginUsr = {'username': null, 'password': null};
+	    $scope.signupUsr = {'username': null, 'password': null,'rpassword': null, 'email':null}
 
-	    $scope.login=function() 
+	    $scope.login=function()
 	    {
-            	$('.buttonLogin').attr("disabled", true);
        		var cliente = {'username': $scope.loginUsr.username, 'password': $scope.loginUsr.password};
-		//$rootScope.usuario.logged_in=true;
-		//$location.url("/books");
 
             	dataFactory.login(cliente).error(function (error, status){
                         $scope.status.msgLogin = "Datos no validos";
        	               	$scope.status.hayerrorLogin = true;
-               	        $('.buttonLogin').removeAttr("disabled");
                	}).success(function (data, status) {
-		
-			if (status == 200) 
+
+			if (status == 200)
 			{
                         	$http.defaults.headers.common['Authorization'] = "Token "+data.token;
 		                $rootScope.usuario.logged_in=true;
+				$rootScope.usuario.id=data.id;
+				$rootScope.startNotifications();
+		                $rootScope.usuario.id=data.id;
                  		$location.url("/books");
+                 		var request = {'userId':$rootScope.usuario.id};
+						dataFactory.getUser(request).success(function(data)
+						{
+							$rootScope.logedUser=data;
+						});
+
                     	}
                  });
-                        
+
 
              }
-        
-     
+	  
+	    $scope.signup=function()
+	    {
+		var usuario = {'username': $scope.signupUsr.username, 'password': $scope.signupUsr.password,
+				'rpassword': $scope.signupUsr.rpassword, 'email': $scope.signupUsr.email};
+
+            	dataFactory.signup(usuario).error(function (error, status){
+                        $scope.status.msgLogin = "Datos no validos";
+       	               	$scope.status.hayerrorLogin = true;
+               	}).success(function (data, status) {
+
+			if (status == 200)
+			{
+					$http.defaults.headers.common['Authorization'] = "Token "+data.token;
+		                $rootScope.usuario.logged_in=true;
+				$rootScope.usuario.id=data.id;
+				$rootScope.startNotifications();
+		                $rootScope.usuario.id=data.id;
+                 		$location.url("/books");
+                 		var request = {'userId':$rootScope.usuario.id};
+						dataFactory.getUser(request).success(function(data)
+						{
+							$rootScope.logedUser=data;
+						});
+
+                    	}
+                 });
+
+             }
+
+
 }]);
-		
+
 		
 
 angular.module('SHAREBOOKSApp')
@@ -103,7 +217,13 @@ angular.module('SHAREBOOKSApp')
 				dataFactory.bookrequest(req).success(function(data)
 				{
 					
-					//simular notificaciones
+					var modalOptions2 = {
+                        		mType:'notify',
+                        		actionButtonText: 'Ok',
+                        		bodyText: "La solicitud fue enviada con exito"
+                    		};
+                   		
+				 modalService.showModal({}, modalOptions2)	
 					
 
 
@@ -132,50 +252,14 @@ angular.module('SHAREBOOKSApp')
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
 	{
 			$rootScope.status={"hayerror":false,"success":false,"msg":null};
-			$scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
+			$scope.book={title:'',author:'',year:'',image:'book.jpg'};
+
+			dataFactory.mybooks().success(function(data)
+                	{
+				$scope.books=data;				
+	                });					
 			
-			            $scope.books=
-			            [
-			                {
-			                    "title":"Cartero",
-    		                    "author":"Charles Bukowski",
-					            "year":"1971",
-					            "image":"http://media.bookshare.com/cartero.jpg"
-					        },
-					        {
-					            "title":"La maquina de follar",
-					            "author":"Charles Bukowski",
-					            "year":"1978",
-					            "image":"http://media.bookshare.com/follar.jpg"
-					        },
-					        {
-					            "title":"Cartero",
-					            "author":"Charles Bukowski",
-					            "year":"1971",
-					            "image":"http://media.bookshare.com/cartero.jpg"
-					         },
-					         {
-																																																														                    "title":"La maquina de follar",
-				               	"author":"Charles Bukowski",
-				               "year":"1978",
-				               "image":"http://media.bookshare.com/follar.jpg"
-						     },
-						     {
-						       "title":"Cartero",
-						       "author":"Charles Bukowski",
-						       "year":"1971",
-						       "image":"http://media.bookshare.com//cartero.jpg"
-						     },
-						     {
-						       "title":"La maquina de follar",
-						       "author":"Charles Bukowski",
-						       "year":"1978",
-						       "image":"http://media.bookshare.com//follar.jpg"
-						     }
-
-                           ];
-
-
+			
 				$scope.delete=function(book)
 				{
 					 var modalOptions = {
@@ -187,8 +271,14 @@ angular.module('SHAREBOOKSApp')
               				};
 
                 	         	modalService.showModal({}, modalOptions).then(function (result){
-		
-		        	        });				
+                	         		var request = {'id': book.id};
+                	         		console.log(request);
+									dataFactory.deleteBook(request);
+									dataFactory.mybooks().success(function(data)
+									{
+										$scope.books=data;
+									});
+		        	        });
 				}				
 
 				$scope.edit=function(book)
@@ -199,12 +289,37 @@ angular.module('SHAREBOOKSApp')
 
 				$scope.new=function()
 				{
-                                        $('#newBookModal').modal('toggle');
+					$('#newBookModal').modal('toggle');
+				}
+
+				$scope.newBook=function()
+				{
+					var reqCreateBook = {
+						"owner":$rootScope.logedUser.username,
+						"title":$scope.book.title,
+						"year":$scope.book.year,
+						"author":$scope.book.author,
+						"image":$scope.book.image
+					};
+					dataFactory.createBook(reqCreateBook);
+					dataFactory.mybooks().success(function(data)
+                	{
+						$scope.books=data;
+	                });
+					$('#newBookModal').modal('hide');
 				}
 
 				$scope.editBook=function()
 				{
-					alert('submit changes')				
+					var editBookRequest = {
+						'id':$scope.book.id,
+						'title':$scope.book.title,
+						'author':$scope.book.author,
+						'year':$scope.book.year,
+						'image':$scope.book.image
+					}
+					dataFactory.editBook(editBookRequest);
+					$('#editBookModal').modal('hide');
 				}
 
 				$scope.imageChange=function()
@@ -217,60 +332,296 @@ angular.module('SHAREBOOKSApp')
 
 
 
-
 angular.module('SHAREBOOKSApp')
     .controller('NotificationsCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
     {
-                        $rootScope.status={"hayerror":false,"success":false,"msg":null};
-                        $scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
+                $rootScope.status={"hayerror":false,"success":false,"msg":null};
+		$rootScope.notifCount="";
+		$scope.request={};
+		$scope.calification=0;
+		$scope.setcalif=function(c){$scope.calification=c; }
+		
+		$scope.showDetail=function(req)
+		{
+			$rootScope.notifCount="";
+			$scope.request=req;
+			$scope.calification=0;
+			$scope.title=(req.user==$rootScope.usuario.id)? "Calificar este libro":"Calificar este prestamo";
 
-                                    $scope.books=
-                                    [
-                                        {
-                                            "title":"Cartero",
-                                    "author":"Charles Bukowski",
-                                                    "year":"1971",
-                                                    "image":"http://media.bookshare.com/cartero.jpg"
-                                                },
-                                                {
-                                                    "title":"La maquina de follar",
-                                                    "author":"Charles Bukowski",
-                                                    "year":"1978",
-                                                    "image":"http://media.bookshare.com/follar.jpg"
-                                                },
-                                                {
-                                                    "title":"Cartero",
-                                                    "author":"Charles Bukowski",
-                                                    "year":"1971",
-                                                    "image":"http://media.bookshare.com/cartero.jpg"
-                                                 },
-                                                 {
-                                                                                                                                                                                                                                       
-                                                "author":"Charles Bukowski",
-                                               "year":"1978",
-                                               "image":"http://media.bookshare.com/follar.jpg"
-                                                     },
-                                                     {
-                                                       "title":"Cartero",
-                                                       "author":"Charles Bukowski",
-                                                       "year":"1971",
-                                                       "image":"http://media.bookshare.com//cartero.jpg"
-                                                     },
-                                                     {
-                                                       "title":"La maquina de follar",
-                                                       "author":"Charles Bukowski",
-                                                       "year":"1978",
-                                                       "image":"http://media.bookshare.com//follar.jpg"
-                                                     }
-
-                           ];
+			if(req.book.owner==$rootScope.usuario.id && req.state==0)$('#acceptRequestModal').modal('toggle');
+			else
+			if(req.book.owner==$rootScope.usuario.id && req.state==1)$('#deliverRequestModal').modal('toggle');
+			else
+			if(req.user==$rootScope.usuario.id && req.state==2)$('#deliveredRequestModal').modal('toggle');
+			else
+			if(req.user==$rootScope.usuario.id && req.state==3)$('#returnRequestModal').modal('toggle');
+			else
+			if(req.book.owner==$rootScope.usuario.id && req.state==4)$('#confirmreturnedRequestModal').modal('toggle');
+			else
+			if((req.state==5 || req.state==8) && req.user==$rootScope.usuario.id)$('#calificationRequestModal').modal('toggle');
+			else
+			if((req.state==5 || req.state==7) && req.book.owner==$rootScope.usuario.id)$('#calificationRequestModal').modal('toggle');
+			else
+			$('#showRequestModal').modal('toggle');
+		}
 
 
-                /*$scope.notifs=
-                [
-                        //{type:'alert-info',title:'Calificacion',body:'Te han calificado con 5 estrellas!!',link:'#'},
-                        //{type:'alert-warning',title:'Solicitud',body:'Tienes una solicitud pendiente',link:'#'}
-                ];*/
+		$scope.aceptar=function()
+		{
+			dataFactory.bookrequestConfirm({'id':$scope.request.id}).success(function()
+			{
+				$('#acceptRequestModal').modal('toggle');
+
+				var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "La solicitud fue confirmada"}
+
+				modalService.showModal({}, modalOptions2)
+
+			});
+
+		}
+
+		$scope.rechazar=function()
+		{
+
+			dataFactory.bookrequestReject({'id':$scope.request.id}).success(function()
+                        {
+				$('#acceptRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "La solicitud fue rechazada"}
+
+				modalService.showModal({}, modalOptions2)
+
+                        });
+
+		}
+
+		$scope.entregar=function()
+                {
+
+                        dataFactory.bookrequestDeliver({'id':$scope.request.id}).success(function()
+                        {
+                                $('#deliverRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la confirmacion de entrega"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+
+		 $scope.recibir=function()
+                {
+
+                        dataFactory.bookrequestConfirmDelivered({'id':$scope.request.id}).success(function()
+                        {
+                                $('#deliveredRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la confirmacion de recepcion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+		
+		$scope.devolver=function()
+                {
+
+                        dataFactory.bookrequestReturn({'id':$scope.request.id}).success(function()
+                        {
+                                $('#returnRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se envio la solicitud de devolucion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+
+
+		$scope.confirmarDevolucion=function()
+                {
+
+                        dataFactory.bookrequestConfirmReturned({'id':$scope.request.id}).success(function()
+                        {
+                                $('#confirmreturnedRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Se confirmo la devolucion"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+                }
+
+
+		$scope.calificar=function()
+		{
+			if($scope.calification==0){ alert("Seleccione una calificacion"); return; }
+
+			dataFactory.bookrequestCalification({'id':$scope.request.id,'calif_owner':$scope.calification,'calif_reader':$scope.calification}).success(function()
+                        {
+                                $('#calificationRequestModal').modal('toggle');
+
+                                var modalOptions2 = {
+                                mType:'notify',
+                                actionButtonText: 'Ok',
+                                bodyText: "Su calificacion ha sido enviada"}
+
+                                modalService.showModal({}, modalOptions2)
+
+                        });
+
+
+		}
+
+
+
+
+
+}]);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('SharedCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+                $rootScope.status={"hayerror":false,"success":false,"msg":null};
+		$scope.concedidos=[];
+		$scope.recibidos=[];
+		$scope.request={};
+                	
+		dataFactory.myrequests().success(function(data)
+                {
+
+	                for(var sh in data)
+        	        {
+                	        if(data[sh].user==$rootScope.usuario.id)
+                        	        $scope.recibidos.push(data[sh]);
+	                        else
+        	                        $scope.concedidos.push(data[sh]);
+                	}
+
+                });
+
+		
+		$scope.requestDetail=function(req)
+		{
+			$scope.request=req;
+                        $('#showRequestModal').modal('toggle');			
+		}
+}]);
+
+
+angular.module('SHAREBOOKSApp')
+    .controller('AccountCtrl', ['$scope','$rootScope','$routeParams', '$location','$http', 'dataFactory','modalService',
+    function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
+    {
+    	$scope.profileUsr = {'username': null,'actualPassword':null, 'password': null,'rpassword': null, 'email':null}
+    	$scope.errorMsg=null;
+    	$scope.showPasswordMessage = false;
+    	var request = {'userId':$rootScope.usuario.id};
+		dataFactory.getUser(request).success(function(data)
+			{
+				$scope.errorMsg=null;
+				$rootScope.logedUser=data;
+			}).error($scope.errorMsg="Ups, ocurrio un error al obtener los datos");
+
+
+		$scope.updateNameModal=function()
+		{
+			$('#modifyNameModal').modal('toggle');
+		}
+
+		$scope.updateName=function()
+		{
+			var reqUpdateName = {'userId':$rootScope.usuario.id, 'type':'name', 'username':$scope.profileUsr.username};
+
+			dataFactory.updateUser(reqUpdateName).success(function(response) {
+                $rootScope.logedUser = response
+				$scope.errorMsg = null;;
+            });
+
+			$('#modifyNameModal').modal('hide');
+		}
+
+		$scope.updateEmailModal=function()
+		{
+			$('#modifyEmailModal').modal('toggle');
+		}
+
+		$scope.updateEmail=function()
+		{
+			var reqUpdateEmail = {'userId':$rootScope.usuario.id, 'type':'email', 'email':$scope.profileUsr.email};
+			dataFactory.updateUser(reqUpdateEmail).success(function(response) {
+                $rootScope.logedUser = response;
+                $scope.errorMsg = null;
+
+            });
+			$('#modifyEmailModal').modal('hide');
+		}
+
+		$scope.updatePasswordModal=function()
+		{
+			$('#modifyPasswordModal').modal('toggle');
+		}
+
+		$scope.updatePassword=function()
+		{
+			var reqUpdatePassword = {'userId':$rootScope.usuario.id, 'type':'password',
+				'actualPassword': $scope.profileUsr.actualPassword,
+				'password':$scope.profileUsr.password,
+				'rpassword':$scope.profileUsr.rpassword };
+			dataFactory.updateUser(reqUpdatePassword).success(function (response) {
+				$scope.errorMsg = null;
+				$scope.showPasswordMessage = true;
+            }).error(function(error){
+				console.log(error);
+				if(error.status=400){
+					$scope.errorMsg = error.message;
+				}
+			});
+			$('#modifyPasswordModal').modal('hide');
+
+		}
+
 
 }]);

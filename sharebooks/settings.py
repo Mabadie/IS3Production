@@ -24,8 +24,6 @@ SECRET_KEY = 'nvt%2tz%q%25ve2w!teup7)j95jzwrbvp&dt)2bvk#t=-h0^1*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -40,6 +38,11 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'books.apps.BookConfig',
     'bookrequest.apps.BookrequestConfig',
+    'notifications.apps.NotificationsConfig',	
+     #'django.db.backends.mysql',
+     #'push_notifications',
+     #'fcm',
+    'Users.apps.UsersConfig',
     # 'django.db.backends.mysql'
     # 'push_notifications',
 ]
@@ -52,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'sharebooks.urls'
@@ -96,7 +100,8 @@ DATABASES = {
         'USER': 'admin',
         'PASSWORD': 'is32018',
         'HOST': '190.64.68.74',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306',
+        #'HOST': 'localhost',
+	'PORT': '3306',
     }
 }
 
@@ -124,6 +129,9 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+    ),
+   'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAdminUser'
     ),
 
     # 'PAGE_SIZE': 20,
@@ -161,4 +169,37 @@ STATIC_ROOT = BASE_DIR+'/app/'
 ALLOWED_HOSTS = ['*']
 MEDIA_ROOT = 'media'
 MEDIA_URL = '/media/'
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
+                       'pathname=%(pathname)s lineno=%(lineno)s ' +
+                       'funcname=%(funcName)s %(message)s'),
+            'datefmt': '%Y-%m-%d %H:%M:%S'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'DEBUG',
+            'class': 'logging.NullHandler',
+        },
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose'
+        }
+    },
+    'loggers': {
+        'herokuLogger': {
+            'handlers': ['console'],
+            'level': 'INFO',
+        }
+    }
+}

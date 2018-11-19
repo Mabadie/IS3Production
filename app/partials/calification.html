@@ -1,0 +1,152 @@
+<style>
+.img-wrapper {
+  position: relative;
+}
+
+.img-overlay {
+   position: absolute;
+   top: 5px;
+   bottom:0;
+   left: 0;
+   right: 0;
+   text-align: center;
+}
+
+.img-overlay:before {
+   content: ' ';
+   display: block;
+}
+
+label{ color:grey;}
+
+input[type = "radio"]{ display:none;}
+
+.clasificacion{
+      direction: rtl;/* right to left */
+      unicode-bidi: bidi-override;/* bidi de bidireccional */
+  }
+
+label:hover{color:orange;}
+
+input[type = "radio"]:checked ~ label{color:orange;}
+
+#form {
+  width: 250px;
+  margin: 0 auto;
+  height: 50px;
+}
+
+#form p {
+  text-align: center;
+}
+
+#form label {
+  font-size: 20px;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+label {
+  color: grey;
+  font-size:30px;	
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+label:hover,
+label:hover ~ label {
+  color: orange;
+}
+
+input[type="radio"]:checked ~ label {
+  color: orange;
+}
+
+
+</style>
+
+
+<div class="modal" id="calificationRequestModal">
+    <div class="modal-dialog" style='width:750px'>
+        <div class="modal-content">
+
+                <div class="modal-header dialog-header-notify ">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4>Calificar</h4>
+                </div>
+				
+		<div class="modal-body">
+				
+                <div class="alert alert-warning" ng-if="status.hayerror" style="margin-top: 0px; margin-left: 0px; margin-right: 0px;margin-bottom: 15px;" >
+                     <button type="button" class="close" ng-click="status.hayerror=false">&times;</button>
+                     <span class="glyphicon glyphicon-warning-sign"></span>&nbsp; {{status.msg}}
+                </div>
+
+				<div class="row">
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+					<div class="img-wrapper">
+						<img src="{{request.book.image}}" width='200' height='300' class="img-responsive center-block book"/>
+					<div class="img-overlay">
+  			        </div>
+				   </div>
+
+				</div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+				             <strong>Titulo</strong>: {{request.book.title}} 
+				</div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+				             <strong>Autor</strong>:{{request.book.author}}
+				</div>
+
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+					<strong>A&ntilde;o</strong>:{{request.book.year}}
+				</div>
+				
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+                                        <strong>Fecha de solicitud</strong>:{{formatDate(request.timestamp)}}
+                                </div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+                                        <strong>Estado de solicitud</strong>:{{formatState(request.state)}}
+                                </div>
+
+				<div class="form-group col-sm-6 col-xs-7" style="margin-bottom: 6px;">
+					
+					<br/>
+                                        <strong>{{title}}</strong>
+					<br/>
+					<br/>
+					<p class='clasification'>
+						<input id="radio1" ng-setcalif='setcalif(5)' name="estrellas"  value="5" type="radio">
+						<label class='glyphicon glyphicon-star' for="radio1"></label>
+						<input id="radio2"  ng-click='setcalif(4)' name="estrellas"  value="4" type="radio">
+						<label class='glyphicon glyphicon-star' for="radio2"></label>
+						<input id="radio3"   ng-click='setcalif(3)' name="estrellas"  value="3" type="radio">
+						<label class='glyphicon glyphicon-star' for="radio3"></label>
+						<input id="radio4"   ng-click='setcalif(2)' name="estrellas"  value="2" type="radio">
+						<label class='glyphicon glyphicon-star' for="radio4"></label>
+						<input id="radio5"   ng-click='setcalif(1)' name="estrellas"  value="1" type="radio">
+						<label class='glyphicon glyphicon-star' for="radio5"></label>
+					</p>
+                                </div>
+                                </div>
+			  <br/>
+			  </div>
+
+		<div class="modal-footer">
+                    <button type="button" class="btn btn-default" ng-click="cerrarModal('#calificationRequestModal');">Cancelar</button>
+		    <button type="button" class="btn" ng-click='calificar()'>Calificar</button>
+		</div>
+        </div>
+    </div>
+</div>
+

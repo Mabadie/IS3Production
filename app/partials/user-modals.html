@@ -1,0 +1,134 @@
+<style>
+    .img-wrapper {
+        position: relative;
+    }
+
+    .img-overlay {
+        position: absolute;
+        top: 5px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+    }
+
+    .img-overlay:before {
+        content: ' ';
+        display: block;
+    }
+
+</style>
+
+<div class="modal" id="modifyNameModal">
+    <div class="modal-dialog" style='width:750px'>
+        <div class="modal-content">
+
+            <div class="modal-header dialog-header-notify ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>Cambie su Nombre de Usuario</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-warning" ng-if="status.hayerror"
+                     style="margin-top: 0px; margin-left: 0px; margin-right: 0px;margin-bottom: 15px;">
+                    <button type="button" class="close" ng-click="status.hayerror=false">&times;</button>
+                    <span class="glyphicon glyphicon-warning-sign"></span>&nbsp; {{ status.msg }}
+                </div>
+                <form name="form" ng-Submit="updateName()">
+
+                    <input type="text" class="form-control" name="username" ng-model="profileUsr.username"
+                           placeholder='Usuario' required/>
+
+
+                    <div class="modal-footer">
+                        <br/>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Modificar</button>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modifyEmailModal">
+    <div class="modal-dialog" style='width:750px'>
+        <div class="modal-content">
+
+            <div class="modal-header dialog-header-notify ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>Cambie su Email</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-warning" ng-if="status.hayerror"
+                     style="margin-top: 0px; margin-left: 0px; margin-right: 0px;margin-bottom: 15px;">
+                    <button type="button" class="close" ng-click="status.hayerror=false">&times;</button>
+                    <span class="glyphicon glyphicon-warning-sign"></span>&nbsp; {{ status.msg }}
+                </div>
+
+                <form name="form" ng-Submit="updateEmail()">
+                    <input type="email" class="form-control" name="email" ng-model="profileUsr.email"
+                           placeholder='Email' required/>
+
+                    <div class="modal-footer">
+                        <br/>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Modificar</button>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modifyPasswordModal">
+    <div class="modal-dialog" style='width:750px'>
+        <div class="modal-content">
+
+            <div class="modal-header dialog-header-notify ">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>Cambie su Contraseña</h4>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="alert alert-warning" ng-if="status.hayerror"
+                     style="margin-top: 0px; margin-left: 0px; margin-right: 0px;margin-bottom: 15px;">
+                    <button type="button" class="close" ng-click="status.hayerror=false">&times;</button>
+                    <span class="glyphicon glyphicon-warning-sign"></span>&nbsp; {{ status.msg }}
+                </div>
+                <form name="form" ng-Submit="updatePassword()">
+
+                    <input type="password" class="form-control" name="actualPassword"
+                           ng-model="profileUsr.actualPassword"
+                           placeholder='Contraseña Actual' required/>
+
+                    <input type="password" class="form-control" name="password" ng-model="profileUsr.password"
+                           placeholder='Contraseña Nueva' required/>
+
+                    <input type="password" class="form-control" name="rpassword" ng-model="profileUsr.rpassword"
+                           placeholder='Repetir Contraseña' required/>
+
+                    <div class="modal-footer">
+                        <br/>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">Modificar</button>
+                        </div>
+                        <br/>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+

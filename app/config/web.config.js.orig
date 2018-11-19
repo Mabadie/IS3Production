@@ -1,8 +1,0 @@
-angular.module('SHAREBOOKSApp').constant('APP_CONFIG', {
-<<<<<<< HEAD:app/config/web.config.js
-    ct_urlBase: 'https://bookshare1995.herokuapp.com',
-=======
-    ct_urlBase: 'http://services.bookshare.com',
->>>>>>> db6521c5f68ffdc7ab959ca2a3641d8c5fa01519:books/config/web.config.js
-    ct_urlService: ''
-});

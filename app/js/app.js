@@ -8,8 +8,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$routeProvider.when('/shared', {controller: 'SharedCtrl',templateUrl: './views/shared.html'});
 	$routeProvider.when('/login', {controller: 'LoginCtrl',templateUrl: './views/login.html'});
 	$routeProvider.when('/register', {controller: 'LoginCtrl',templateUrl: './views/register.html'});
-	$routeProvider.when('/notifications', {controller: 'NotifiationsCtrl',templateUrl: './views/notifications.html'});
-
+	$routeProvider.when('/account', {controller: 'AccountCtrl',templateUrl: './views/account.html'});
+	$routeProvider.when('/notifications', {controller: 'NotificationsCtrl',templateUrl: './views/notifications.html'});
     	$routeProvider.otherwise({ redirectTo: '/books' });
 }]);
 
@@ -17,7 +17,8 @@ var interceptor=function($q, $rootScope, $log) {
     return {
         'request': function(config){
             $rootScope.ajaxCount++;
-            $('#loading-indicator').show();
+            if(config.url.indexOf('notifications')==-1)
+	    $('#loading-indicator').show();
             return config;
         },
         'response': function(result){
@@ -61,6 +62,7 @@ var interceptor=function($q, $rootScope, $log) {
                     break;
                 default :
 		    console.log(rejection);	
+		    if(rejection.data.detail && rejection.data.detail.indexOf('token')!=-1)break;	
                     $log.warn(rejection.status+':'+rejection.statusText);
                     $rootScope.status.msg = rejection.data;
                     $rootScope.status.hayerror =true;

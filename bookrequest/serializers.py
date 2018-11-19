@@ -1,16 +1,23 @@
 from rest_framework import serializers
 from books.models import Book
 from bookrequest.models import BookRequest
+from books.serializers import BookSerializer
 
 class BookRequestSerializer(serializers.ModelSerializer):
+	book = BookSerializer(read_only=True)
 	
-	#book= serializers.HyperlinkedRelatedField(many=True, view_name='book-detail', read_only=True)
+	class Meta:
+		model = BookRequest
+		fields = ('id','user','book','state','timestamp')
+
+"""
+class BookRequestGetSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = BookRequest
-		fields = ('id','book','timestamp')
+		fields = ('user','book','state','timestamp')
 
-
+"""
 
 class BookRequestPostSerializer(serializers.ModelSerializer):
 
@@ -24,4 +31,4 @@ class BookRequestPutSerializer(serializers.ModelSerializer):
 
         class Meta:
                 model = BookRequest
-                fields = ('id',)
+                fields = ('id','calif_owner','calif_reader')
