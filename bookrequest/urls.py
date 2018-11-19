@@ -1,6 +1,4 @@
 from django.conf.urls import url
-from rest_framework.urlpatterns import format_suffix_patterns
-from books import views
 from bookrequest import views
 
 urlpatterns = [

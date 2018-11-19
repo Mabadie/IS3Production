@@ -8,6 +8,7 @@ from rest_framework import status
 from bookrequest.models import BookRequest
 from books.models import Book
 from rest_framework.response import Response
+from django.http import Http404
 from django.db.models import Q
 from notifications.models import Notification
 
@@ -37,6 +38,8 @@ class BookRequestList(APIView):
 
 class BookRequestConfirm(APIView):
 
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 	def post(self,request,format=None):
 		
 		serializer = BookRequestPutSerializer(data=request.data)
@@ -64,6 +67,8 @@ class BookRequestConfirm(APIView):
 
 class BookRequestDeliver(APIView):
 
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 	def post(self,request,format=None):
 
 		serializer = BookRequestPutSerializer(data=request.data)
@@ -88,6 +93,7 @@ class BookRequestDeliver(APIView):
 
 
 class BookRequestConfirmDelivered(APIView):
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def post(self,request,format=None):
 
@@ -114,6 +120,7 @@ class BookRequestConfirmDelivered(APIView):
 
 
 class BookRequestReturn(APIView):
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def post(self,request,format=None):
 
@@ -139,6 +146,7 @@ class BookRequestReturn(APIView):
 
 
 class BookRequestConfirmReturned(APIView):
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def post(self,request,format=None):
 
@@ -163,7 +171,8 @@ class BookRequestConfirmReturned(APIView):
 
 
 class BookRequestReject(APIView):
-	
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
 	def post(self,request,format=None):
 
 		serializer = BookRequestPutSerializer(data=request.data)
@@ -186,6 +195,7 @@ class BookRequestReject(APIView):
 
 
 class BookRequestCalification(APIView):
+	permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 	def post(self,request,format=None):
 
