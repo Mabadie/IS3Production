@@ -13,6 +13,7 @@ angular.module('SHAREBOOKSApp')
 	    $rootScope.notifCount="";
 	    $rootScope.notiflag=false;
 	    $rootScope.timeoutNotifications=3000;
+	    $scope.notificationsAsked=false;
 	
             $('nav').addClass('shrink');
 	    $(".nav a").on("click", function(){
@@ -68,35 +69,37 @@ angular.module('SHAREBOOKSApp')
 	var getmynotifications=function()
 	{
 		console.log("Se van a pedir notificaciones!");
-		dataFactory.mynotifications().success(function(data)
-                        {
-                        	console.log("Succes! Se obtuvieron notificaciones!");
-                        	$rootScope.timeoutNotifications=3000;
-                                var count=0;
-                                for(var n in data){
-                                        if(!data[n].done) count++;
-                                }
+		console.time('NotificationsRequest')
 
-				if(!$rootScope.notiflag)
-				{
-					$rootScope.notifCount=(count==0)?"":count;
-					$rootScope.notifications=data;
-					$rootScope.notiflag=true;
-                                }else
-				{
-					if(count)
-					{
-						$rootScope.notifCount=(count==0)?"":count;
-	                                        $rootScope.notifications=data;
-					}
-				}
+		if (!$scope.notificationsAsked) {
+			$scope.notificationsAsked = true;
+            dataFactory.mynotifications().success(function (data) {
+                $scope.notificationsAsked = false;
+                var count = 0;
+                for (var n in data) {
+                    if (!data[n].done) count++;
+                }
+
+                if (!$rootScope.notiflag) {
+                    $rootScope.notifCount = (count == 0) ? "" : count;
+                    $rootScope.notifications = data;
+                    $rootScope.notiflag = true;
+                } else {
+                    if (count) {
+                        $rootScope.notifCount = (count == 0) ? "" : count;
+                        $rootScope.notifications = data;
+                    }
+                }
 
 
-                        }).error(function () {
-                        		console.log("Notifications error");
-								$rootScope.timeoutNotifications = 15000;
-							});
+            }).error(function () {
+            	$scope.notificationsAsked = false;
+                console.log("Notifications error");
+            });
+        }
 		console.log("Fin notificaciones");
+		console.timeEnd('NotificationsRequest');
+
 	}
 
 
