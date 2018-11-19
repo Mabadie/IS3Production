@@ -105,13 +105,13 @@ angular.module('SHAREBOOKSApp')
 
 	$rootScope.startNotifications=function()
 	{
-		//getmynotifications();
-		//$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
+		getmynotifications();
+		$rootScope.interval=setInterval(getmynotifications,$rootScope.timeoutNotifications);
 	}
 
 	$rootScope.stopNotifications=function()
         {
-          //      clearInterval($rootScope.interval)
+                clearInterval($rootScope.interval)
         }
 
     }]);
