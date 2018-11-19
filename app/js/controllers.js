@@ -68,8 +68,8 @@ angular.module('SHAREBOOKSApp')
 
 	var getmynotifications=function()
 	{
-		console.log("Se van a pedir notificaciones!");
-		console.time('NotificationsRequest')
+		//console.log("Se van a pedir notificaciones!");
+		//console.time('NotificationsRequest')
 
 		if (!$scope.notificationsAsked) {
 			$scope.notificationsAsked = true;
@@ -94,11 +94,11 @@ angular.module('SHAREBOOKSApp')
 
             }).error(function () {
             	$scope.notificationsAsked = false;
-                console.log("Notifications error");
+                //console.log("Notifications error");
             });
         }
-		console.log("Fin notificaciones");
-		console.timeEnd('NotificationsRequest');
+		//console.log("Fin notificaciones");
+		//console.timeEnd('NotificationsRequest');
 
 	}
 
