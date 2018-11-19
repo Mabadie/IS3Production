@@ -252,7 +252,7 @@ angular.module('SHAREBOOKSApp')
     function ($scope, $rootScope, $routeParams,  $location, $http, dataFactory, modalService)
 	{
 			$rootScope.status={"hayerror":false,"success":false,"msg":null};
-			$scope.book={title:'',author:'',year:'',image:'img/book.jpg'};
+			$scope.book={title:'',author:'',year:'',image:'book.jpg'};
 
 			dataFactory.mybooks().success(function(data)
                 	{
